@@ -5,16 +5,16 @@ var cms = {
     initialize: function() {
         cms.w.start.create();
     },
-    core: {
-        addCK: function(url) {
-            var ck = new Date().getTime() + cms.core.getToken(4);
+    c: {
+        ck: function(url) {
+            var ck = new Date().getTime() + cms.c.getToken(4);
             if (url.split("?").length == 1) {
                 return url + "?ck=" + ck;
             } else {
                 return url + "&ck=" + ck;
             }
         },
-        preloader:{
+        pl:{
           show:function(){
             if($("#preloader").length==0){
               $("body").append("<div id='preloader'><span>loading...</span></div>");
@@ -89,8 +89,8 @@ var cms = {
 
             create: function() {
                 cms.w.start.menu.mark("site");
-                cms.core.preloader.show();
-                $.getJSON(cms.core.addCK("data/__sitelist.json"), function(data) {
+                cms.c.pl.show();
+                $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
                     cms.w.site.list(data);
                     cms.w.site.data = data;
                 });
@@ -108,7 +108,7 @@ var cms = {
                 tmp.push(o);
               });
               cms.w.site.data.sites=tmp;
-              cms.core.preloader.show();
+              cms.c.pl.show();
               $.post("api/savejson.php?file=__sitelist.json", {
                       data: JSON.stringify(cms.w.site.data)
                   })
@@ -120,7 +120,7 @@ var cms = {
 
             list: function(data) {
 
-                cms.core.preloader.hide();
+                cms.c.pl.hide();
 
                 code = [];
 
@@ -200,9 +200,9 @@ var cms = {
                   var r = confirm("Delete?");
                   if (r == true) {
                     var elm = $(this);
-                    cms.core.preloader.show();
+                    cms.c.pl.show();
                     var deleteFile=elm.parent().attr("data-file");
-                    $.getJSON(cms.core.addCK("data/__sitelist.json"), function(datas) {
+                    $.getJSON(cms.c.ck("data/__sitelist.json"), function(datas) {
                         var newsites = [];
                         for (var i = 0; i < datas.sites.length; i++) {
                             if (datas.sites[i].id != elm.parent().attr("data-id")) {
@@ -227,13 +227,13 @@ var cms = {
             scrollTo:"",
             create: function(id) {
                 if (id == "new") {
-                    cms.core.preloader.show();
-                    $.getJSON(cms.core.addCK("api/getid.php"), function(data) {
+                    cms.c.pl.show();
+                    $.getJSON(cms.c.ck("api/getid.php"), function(data) {
                         cms.w.siteeditor.getdata(data.id, true, "");
                     });
                 } else {
-                    cms.core.preloader.show();
-                    $.getJSON(cms.core.addCK("data/__sitelist.json"), function(data) {
+                    cms.c.pl.show();
+                    $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
 
                         var file = "";
                         for (var i = 0; i < data.sites.length; i++) {
@@ -260,17 +260,17 @@ var cms = {
                     data.visible = true;
                     cms.w.siteeditor.build(data);
                 } else {
-                    $.getJSON(cms.core.addCK("data/" + file), function(data) {
+                    $.getJSON(cms.c.ck("data/" + file), function(data) {
                         cms.w.siteeditor.build(data);
                     });
                 }
             },
             build: function(data) {
-                cms.core.preloader.show();
+                cms.c.pl.show();
                 cms.w.siteeditor.data=data;
-                $.getJSON(cms.core.addCK("data/__sitelist.json"), function(d) {
+                $.getJSON(cms.c.ck("data/__sitelist.json"), function(d) {
                     var code = [];
-                    cms.core.preloader.hide();
+                    cms.c.pl.hide();
                     code.push("<div class='siteeditor'><div class='fixsiteparts'>");
                     code.push("<div class='row'><label>sitetitle</label><input class='title' value='" + data.title + "'></div>");
                     code.push("<div class='row'><label>menu</label><select class='menuid'>");
@@ -304,10 +304,10 @@ var cms = {
                     $("#content").html(code.join(""));
                     cms.w.siteeditor.getContents(data.content);
                     $("#content .fixsiteparts .title").on('change', function() {
-                        $("#content .fixsiteparts .file").val(cms.core.getFilenameFromTitle($(this).val()));
+                        $("#content .fixsiteparts .file").val(cms.c.getFilenameFromTitle($(this).val()));
                     });
                     $("#content .fixsiteparts .title").keyup(function() {
-                        $("#content .fixsiteparts .file").val(cms.core.getFilenameFromTitle($(this).val()));
+                        $("#content .fixsiteparts .file").val(cms.c.getFilenameFromTitle($(this).val()));
                     });
                     $(".save").click(function() {
                         cms.w.siteeditor.saveData(true);
@@ -736,12 +736,12 @@ var cms = {
                 }
                 cms.w.siteeditor.data=o;
                 if(toFile && !tmp){
-                cms.core.preloader.show();
+                cms.c.pl.show();
                 $.post("api/savejson.php?file=" + o.file+"&delete="+deleteFile, {
                         data: JSON.stringify(o)
                     })
                     .done(function(data) {
-                        $.getJSON(cms.core.addCK("data/__sitelist.json"), function(data) {
+                        $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
                             var newsites = [];
                             var found = false;
                             for (var i = 0; i < data.sites.length; i++) {
@@ -788,9 +788,9 @@ var cms = {
             data: {},
 
             create: function() {
-                cms.core.preloader.show();
+                cms.c.pl.show();
                 cms.w.start.menu.mark("menu");
-                $.getJSON(cms.core.addCK("data/__sitelist.json"), function(data) {
+                $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
                     cms.w.menu.list(data);
                     cms.w.menu.data = data;
                 });
@@ -798,7 +798,7 @@ var cms = {
 
             list: function(data) {
 
-                cms.core.preloader.hide();
+                cms.c.pl.hide();
 
                 code = [];
 
@@ -863,8 +863,8 @@ var cms = {
                 });
                 $(".listitem .addsub").click(function() {
                     var elm = $(this).parent();
-                    cms.core.preloader.show();
-                    $.getJSON(cms.core.addCK("api/getid.php"), function(data) {
+                    cms.c.pl.show();
+                    $.getJSON(cms.c.ck("api/getid.php"), function(data) {
                         var mo = {
                             title: "menu subnew",
                             id: data.id,
@@ -879,7 +879,7 @@ var cms = {
         },
         menueditor: {
             create: function(data, id) {
-                cms.core.preloader.hide();
+                cms.c.pl.hide();
                 var mo = {};
 
                 function searchMenuPoint(data, todo) {
@@ -896,8 +896,8 @@ var cms = {
                     mo = data
                 });
                 if (mo.title == undefined) {
-                    cms.core.preloader.show();
-                    $.getJSON(cms.core.addCK("api/getid.php"), function(data) {
+                    cms.c.pl.show();
+                    $.getJSON(cms.c.ck("api/getid.php"), function(data) {
                         var mo = {
                             title: "menu new",
                             id: data.id,
@@ -913,7 +913,7 @@ var cms = {
 
             },
             buildeditor: function(o, parent) {
-                cms.core.preloader.hide();
+                cms.c.pl.hide();
                 var code = [];
                 code.push("<div class='menueditor'>");
                 code.push("<div class='row'><label>title</label><input class='title' value='" + o.title + "'></div>");
@@ -957,7 +957,7 @@ var cms = {
 
             },
             saveAsView:function(){
-            cms.core.preloader.show();
+            cms.c.pl.show();
             var menuNew = [];
             menuNew = goMenu($("#content > .menucontainer > .listitem"));
 
@@ -1022,9 +1022,9 @@ var cms = {
 
               $('.uploader').ajaxUploader(true,function(){cms.w.files.create(cms.w.files.dir,cms.w.files.selectmode,cms.w.files.handle)},function(data){alert("upload error:"+data)},cms.w.files.dir);
 
-              cms.core.preloader.show();
+              cms.c.pl.show();
 
-              $.getJSON(cms.core.addCK("api/getdirlist.php?dir="+cms.w.files.dir), function(data) {
+              $.getJSON(cms.c.ck("api/getdirlist.php?dir="+cms.w.files.dir), function(data) {
                   cms.w.files.addFiles(data);
               });
               // Selectmode button
@@ -1037,8 +1037,8 @@ var cms = {
               });
               $('.filemanager .newfolder').click(function(){
                 var newdir=cms.w.files.dir+$(".filemanager .foldername").val()+"/";
-                cms.core.preloader.show();
-                $.getJSON(cms.core.addCK("api/createfolder.php?dir="+newdir), function(data) {
+                cms.c.pl.show();
+                $.getJSON(cms.c.ck("api/createfolder.php?dir="+newdir), function(data) {
                     cms.w.files.create(newdir,cms.w.files.selectmode,cms.w.files.handle);
                 });
               });
@@ -1062,8 +1062,8 @@ var cms = {
                 });
                 var r = confirm("Delete "+toDelete.length+" files?");
                 if (r == true) {
-                  cms.core.preloader.show();
-                  $.getJSON(cms.core.addCK("api/delete.php?files="+toDelete+","+thumps), function(data) {
+                  cms.c.pl.show();
+                  $.getJSON(cms.c.ck("api/delete.php?files="+toDelete+","+thumps), function(data) {
                       cms.w.files.create(cms.w.files.dir,cms.w.files.selectmode,cms.w.files.handle);
                   });
                 }
@@ -1088,7 +1088,7 @@ var cms = {
                 var folderToDelete=$(".filemanager .nav .folder a").last().attr("data-path");
                 var r=confirm("delete folder: "+folderToDelete+"?");
                 if(r){
-                  $.getJSON(cms.core.addCK("api/deletedir.php?dir="+folderToDelete), function(data) {
+                  $.getJSON(cms.c.ck("api/deletedir.php?dir="+folderToDelete), function(data) {
                       cms.w.files.create("uploads/",cms.w.files.selectmode,cms.w.files.handle);
                   });
                 }
@@ -1096,7 +1096,7 @@ var cms = {
 
             },
             addFiles:function(data){
-              cms.core.preloader.hide();
+              cms.c.pl.hide();
 
               for(var i=0; i<data.files.length; i++){
                 var type=getType(data.files[i]);
@@ -1151,8 +1151,8 @@ var cms = {
             data:[],
             create: function() {
                 cms.w.start.menu.mark("newsletter");
-                cms.core.preloader.show();
-                $.getJSON(cms.core.addCK("/admin/data/__newsletterlist.json"), function(data) {
+                cms.c.pl.show();
+                $.getJSON(cms.c.ck("/admin/data/__newsletterlist.json"), function(data) {
                   cms.w.newsletter.data=data;
                   cms.w.newsletter.build();
                 });
@@ -1169,7 +1169,7 @@ var cms = {
               cms.w.newsletter.buildnewsletterlist();
             },
             buildnewsletterlist:function(){
-              cms.core.preloader.hide();
+              cms.c.pl.hide();
               var data=cms.w.newsletter.data.newsletters;
               var code=[];
               code.push("<div class='secnav'>"+cms.w.button("new newsletter","new")+"</div>");
@@ -1198,7 +1198,7 @@ var cms = {
               }
             },
             buildReceiverlist:function(){
-              cms.core.preloader.hide();
+              cms.c.pl.hide();
               var data=cms.w.newsletter.data.receiverlists;
               var code=[];
               code.push("<div class='secnav'>"+cms.w.button("new receiverlist","new")+"</div>");
@@ -1233,7 +1233,7 @@ var cms = {
             buildReceiverlistEditor:function(file){
               if(file=="new"){
 
-                $.getJSON(cms.core.addCK("api/getid.php"), function(data) {
+                $.getJSON(cms.c.ck("api/getid.php"), function(data) {
                   var o={title:"new receiverlist",id:data.id,receivers:[]};
                   var o2={title:"new receiverlist",id:data.id};
                   cms.w.newsletter.data.receiverlists.push(o2);
@@ -1242,7 +1242,7 @@ var cms = {
 
               }else{
 
-                $.getJSON(cms.core.addCK("api/crypt.php?mode=get&file="+file), function(data) {
+                $.getJSON(cms.c.ck("api/crypt.php?mode=get&file="+file), function(data) {
                   handleData(data);
                 });
 
@@ -1258,7 +1258,7 @@ var cms = {
                 code.push("</div>");
                 $(".newslettercontent").html(code.join(""));
                 $(".receiverList .save").click(function(){
-                  cms.core.preloader.show();
+                  cms.c.pl.show();
                   for(var i=0; i<cms.w.newsletter.data.receiverlists.length; i++){
                     if(cms.w.newsletter.data.receiverlists[i].id==$(".receiverList .id").val()){
                       cms.w.newsletter.data.receiverlists[i].title=$(".receiverList .title").val();
