@@ -1,0 +1,463 @@
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    border: 0 none;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: outside none none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote::before, blockquote::after, q::before, q::after {
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+body {
+    background: #323232 none repeat scroll 0 0;
+}
+#main {
+    background: #fff none repeat scroll 0 0;
+    margin: 10px;
+    overflow: hidden;
+}
+#main nav {
+    background: #43e01f none repeat scroll 0 0;
+}
+#main nav a {
+    background: #f24eff none repeat scroll 0 0;
+    border-right: 5px solid #323232;
+    color: #fff;
+    display: inline-block;
+    font-family: sans-serif;
+    padding: 16px 10px 17px;
+    text-shadow: 0 0 13px #000;
+    text-transform: uppercase;
+}
+#main nav a.active {
+    font-weight: bold;
+}
+#main #content {
+    padding: 10px;
+}
+#main #content > .menucontainer > .listitem {
+    display: block;
+    padding: 30px 0 23px;
+}
+#main #content .menuselect {
+    background: #49ffff none no-repeat scroll 87px center;
+    border: medium none;
+    margin: 10px 0;
+    padding: 9px;
+}
+#main #content button.newsite {
+    margin: 0 0 0 10px;
+}
+.listitem .sub {
+    background: rgba(0, 0, 0, 0.08) none repeat scroll 0 0;
+    clear: both;
+    display: block;
+    float: none;
+    margin: 0;
+    padding: 0 0 0 5px;
+}
+.clear {
+    clear: both;
+    display: block;
+    float: none;
+}
+.clearline {
+    background: #ccc none repeat scroll 0 0;
+    clear: both;
+    float: none;
+    height: 1px;
+    width: 100%;
+}
+#preloader {
+    background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.gallerycontent .itm {
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    padding: 4px;
+    width: 33%;
+}
+.gallerycontent::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+.gallerycontent .item img {
+    display: block;
+    width: 100%;
+}
+#preloader > span {
+    color: #fff;
+    display: block;
+    font-weight: bold;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 9px #000;
+    text-transform: uppercase;
+    top: 50%;
+    width: 100%;
+}
+.footer {
+    background: #000 none repeat scroll 0 0;
+    color: #fff;
+    font-size: 11px;
+    padding: 10px;
+}
+.newelement a {
+    background-color: #f2f2f2;
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    display: block;
+    line-height: 32px;
+    margin: 0 0 5px;
+    padding: 5px 5px 5px 49px;
+}
+.listitem .up {
+    background: rgba(0, 0, 0, 0) url("../img/up.png") repeat scroll 0 0;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    height: 32px;
+    margin: 0 10px 0 0;
+    overflow: hidden;
+    text-indent: 100%;
+    width: 32px;
+}
+.listitem .down {
+    background: rgba(0, 0, 0, 0) url("../img/down.png") repeat scroll 0 0;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    height: 32px;
+    margin: 0 10px 0 0;
+    overflow: hidden;
+    text-indent: 100%;
+    width: 32px;
+}
+.listitem .remove {
+    background: rgba(0, 0, 0, 0) url("../img/delete.png") repeat scroll 0 0;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    height: 32px;
+    margin: 0 10px 0 0;
+    overflow: hidden;
+    text-indent: 100%;
+    width: 32px;
+}
+.listitem .addsub {
+    background: rgba(0, 0, 0, 0) url("../img/plus.png") repeat scroll 0 0;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    height: 32px;
+    margin: 0 10px 0 0;
+    overflow: hidden;
+    text-indent: -203%;
+    width: 32px;
+}
+.item.html .htmlcode {
+    box-sizing: border-box;
+    height: 100px;
+    padding: 10px;
+    width: 100%;
+}
+.siteeditor > .contents > .item {
+    background: #f2f2f2 none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px;
+}
+.siteeditor > .contents > .item > .nav {
+    padding: 5px;
+    text-align: right;
+}
+.siteeditor > .contents > .item.video .preview {
+    display: inline-block;
+    height: 90px;
+    margin: 0 20px 0 0;
+}
+form .preloader .bar {
+    background: #000 none repeat scroll 0 0;
+    height: 10px;
+    width: 0;
+}
+.siteeditor > .contents > .item.gallery .gallerycontent .itm > img {
+    display: block;
+    width: 100%;
+}
+button {
+    background: #e31912 none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+}
+.siteeditor > .fixsiteparts .row label {
+    display: inline-block;
+    padding: 0 10px 20px;
+    width: 80px;
+}
+.listitem .title {
+    color: #444;
+    display: inline-block;
+    line-height: 32px;
+    vertical-align: bottom;
+}
+.siteeditor .item.video .fields {
+    box-sizing: border-box;
+    display: block;
+    margin: -81px 0 30px 130px;
+    padding: 0;
+    vertical-align: bottom;
+}
+.siteeditor > .contents > .item.video {
+    vertical-align: middle;
+}
+h2 {
+    font-size: 25px;
+    font-weight: normal;
+    line-height: 32px;
+    text-align: left;
+}
+.nav > a.down, .nav > a.up, .nav > a.delete {
+    background: rgba(0, 0, 0, 0) url("../img/down.png") repeat scroll 0 0;
+    cursor: pointer;
+    display: inline-block;
+    height: 32px;
+    margin: 0 10px 0 0;
+    overflow: hidden;
+    padding: 0;
+    text-indent: 100%;
+    width: 32px;
+}
+.nav > a.up {
+    background: rgba(0, 0, 0, 0) url("../img/up.png") repeat scroll 0 0;
+}
+.nav > a.delete {
+    background: rgba(0, 0, 0, 0) url("../img/delete.png") repeat scroll 0 0;
+    margin: 0;
+}
+.siteeditor .item.video .fields label {
+    display: block;
+    width: 100%;
+}
+.siteeditor .item.video .fields input {
+    box-sizing: border-box;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.siteeditor > .contents > .item.image img {
+    display: block;
+    max-width: 50%;
+}
+#main > #content > .menucontainer > .listitem > .up {
+    display: none;
+}
+#main > #content > .menucontainer > .listitem > .down {
+    display: none;
+}
+#main #content > .menucontainer > .listitem > .title {
+    background: #3ce7e9 none repeat scroll 0 0;
+    border-right: 5px solid #f2f2f2;
+    color: #454545;
+    display: inline-block;
+    font-family: sans-serif;
+    padding: 4px;
+}
+option {
+    padding: 5px;
+}
+option:nth-child(2n) {
+}
+.filemanager .files .file {
+    background-color: #f2f2f2 !important;
+    background-repeat: no-repeat !important;
+    background-size: 128px auto !important;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    float: left;
+    font-size: 10px;
+    height: 149px;
+    margin: 0 10px 10px 0;
+    overflow: hidden;
+    position: relative;
+    vertical-align: bottom;
+    width: 128px;
+    word-wrap: break-word;
+}
+.filemanager .files .file.folder {
+    background: rgba(0, 0, 0, 0) url("../img/folder.png") repeat scroll 0 0;
+}
+.filemanager .files .file.text {
+    background: rgba(0, 0, 0, 0) url("../img/text.png") repeat scroll 0 0;
+}
+.filemanager .files .file.archive {
+    background: rgba(0, 0, 0, 0) url("../img/archive.png") repeat scroll 0 0;
+}
+.filemanager > .files > .file > .title {
+    background: #ccc none repeat scroll 0 0;
+    bottom: 0;
+    font-size: 11px;
+    padding: 5px;
+    position: absolute;
+    width: 100%;
+}
+.siteeditor .contents .item h2 {
+    float: left;
+}
+.filemanager > .nav .folder > a {
+    background: #3ce7e9 none repeat scroll 0 0;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 17px;
+    margin: 0 14px 0 0;
+    padding: 10px;
+    position: relative;
+}
+.filemanager > .nav .folder > a::after {
+    content: "/";
+    position: absolute;
+    right: -10px;
+}
+.filemanager .files .file.selected {
+    border: 2px solid #ff0000;
+}
+.item.text_image > img {
+    max-width: 100%;
+}
+.item.downloads .filename {
+    display: inline-block;
+    margin: 0 0 0 10px;
+    vertical-align: top;
+    width: 200px;
+}
+.item.downloads .downloadcontent .nav {
+    display: inline-block;
+}
+.item.downloads .downloadcontent {
+    margin: 10px 0 0;
+}
+.item.downloads .downloadcontent .itm {
+    border-bottom: 1px solid;
+    margin: 10px 0 0;
+}
+.item.downloads .itm > input {
+    line-height: 32px;
+    margin: 0 0 5px;
+    padding: 2px 0;
+    vertical-align: top;
+}
+.gallerycontent .itm:nth-child(3n)::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+.item.image .description > label {
+    margin: 0 5px 0 0;
+}
+.item.image .description {
+    margin: 10px 0 0;
+}
+button.select_f {
+    margin: 10px 0;
+}
+.item.text_image > label {
+    margin: 0 5px 0 0;
+}
+.item.text_image .imagealign {
+    margin: 0 0 10px;
+}
+.editor-code {
+    box-sizing: border-box;
+    height: 200px;
+    width: 100%;
+}
+.gallerycontent > .itm .description {
+    box-sizing: border-box;
+    width: 100%;
+}
+@media (max-width: 768px) {
+.gallerycontent > .itm {
+    width: 50% !important;
+}
+}
+@media (max-width: 500px) {
+.gallerycontent > .itm {
+    width: 100% !important;
+}
+}
+
+.newelement a.text {
+    background-image: url("/admin/img/ico-text.png");
+}
+.newelement a.headline {
+    background-image: url("/admin/img/ico-headline.png");
+}
+.newelement .text_image {
+    background-image: url("/admin/img/ico-text_image.png");
+}
+.newelement .image {
+    background-image: url("/admin/img/ico-image.png");
+}
+.newelement .video {
+    background-image: url("/admin/img/play.png");
+}
+.newelement .html {
+    background-image: url("/admin/img/ico-html.png");
+}
+.newelement .gallery {
+    background-image: url("/admin/img/ico-gallery.png");
+}
+.newelement .gallery {
+    background-image: url("/admin/img/ico-gallery.png");
+}
+.newelement .downloads {
+    background-image: url("/admin/img/ico-downloads.png");
+}
+.newelement .code {
+    background-image: url("/admin/img/ico-code.png");
+}
+
+.receiverList input {
+    box-sizing: border-box;
+    margin: 10px 0;
+    width: 100%;
+}
+.receiverList textarea {
+    box-sizing: border-box;
+    height: 500px;
+    padding: 10px 5px;
+    width: 100%;
+}
