@@ -3,7 +3,7 @@
 
 var cms = {
     initialize: function() {
-        cms.window.start.create();
+        cms.w.start.create();
     },
     core: {
         addCK: function(url) {
@@ -42,7 +42,7 @@ var cms = {
             return t;
         },
     },
-    window: {
+    w: {
         button: function(name, cl) {
             return "<button class='" + cl + "'>" + name + "</button>";
         },
@@ -50,13 +50,13 @@ var cms = {
             create: function() {
                 var code = [];
                 code.push("<div id='main'>");
-                code.push("<nav>" + cms.window.start.menu.create() + "</nav>");
+                code.push("<nav>" + cms.w.start.menu.create() + "</nav>");
                 code.push("<div id='content'></div>");
                 code.push("<div class='footer'>JSON CMS by Lukas Wallmann</div>")
                 code.push("</div>");
                 $("body").append(code.join(""));
-                cms.window.start.menu.activate();
-                cms.window.site.create();
+                cms.w.start.menu.activate();
+                cms.w.site.create();
             },
 
             menu: {
@@ -72,7 +72,7 @@ var cms = {
                     $("nav a").click(function() {
                         $("nav a").removeClass("active");
                         var c = $(this).attr("class");
-                        var f = eval("cms.window." + c + ".create");
+                        var f = eval("cms.w." + c + ".create");
                         f();
                     });
                 },
@@ -88,11 +88,11 @@ var cms = {
             data: {},
 
             create: function() {
-                cms.window.start.menu.mark("site");
+                cms.w.start.menu.mark("site");
                 cms.core.preloader.show();
                 $.getJSON(cms.core.addCK("data/__sitelist.json"), function(data) {
-                    cms.window.site.list(data);
-                    cms.window.site.data = data;
+                    cms.w.site.list(data);
+                    cms.w.site.data = data;
                 });
             },
 
@@ -107,13 +107,13 @@ var cms = {
                 o.title=elm.children(".title").text();
                 tmp.push(o);
               });
-              cms.window.site.data.sites=tmp;
+              cms.w.site.data.sites=tmp;
               cms.core.preloader.show();
               $.post("api/savejson.php?file=__sitelist.json", {
-                      data: JSON.stringify(cms.window.site.data)
+                      data: JSON.stringify(cms.w.site.data)
                   })
                   .done(function(data) {
-                      cms.window.site.create();
+                      cms.w.site.create();
                   });
 
             },
@@ -147,7 +147,7 @@ var cms = {
                 }
 
                 code.push("</select>");
-                code.push(cms.window.button("new site", "newsite"));
+                code.push(cms.w.button("new site", "newsite"));
 
                 //List sites
                 for (var i = 0; i < data.sites.length; i++) {
@@ -173,10 +173,10 @@ var cms = {
                 });
 
                 $("#content > .newsite").click(function() {
-                    cms.window.siteeditor.create("new");
+                    cms.w.siteeditor.create("new");
                 });
                 $("#content > .listitem > .title").click(function() {
-                    cms.window.siteeditor.create($(this).parent().attr("data-id"));
+                    cms.w.siteeditor.create($(this).parent().attr("data-id"));
                 });
                 $('.listitem .up').click(function(){
                   var elm=$(this).parent();
@@ -185,7 +185,7 @@ var cms = {
                     elmat=elmat.prev();
                   }
                   elm.insertBefore(elmat);
-                  cms.window.site.saveAsView();
+                  cms.w.site.saveAsView();
                 });
                 $('.listitem .down').click(function(){
                   var elm=$(this).parent();
@@ -194,7 +194,7 @@ var cms = {
                     elmat=elmat.next();
                   }
                   elm.insertAfter(elmat);
-                  cms.window.site.saveAsView();
+                  cms.w.site.saveAsView();
                 });
                 $(".listitem .remove").click(function() {
                   var r = confirm("Delete?");
@@ -214,7 +214,7 @@ var cms = {
                                 data: JSON.stringify(datas)
                             })
                             .done(function(data) {
-                                cms.window.site.create();
+                                cms.w.site.create();
                             });
                     });
                   }
@@ -229,7 +229,7 @@ var cms = {
                 if (id == "new") {
                     cms.core.preloader.show();
                     $.getJSON(cms.core.addCK("api/getid.php"), function(data) {
-                        cms.window.siteeditor.getdata(data.id, true, "");
+                        cms.w.siteeditor.getdata(data.id, true, "");
                     });
                 } else {
                     cms.core.preloader.show();
@@ -241,13 +241,13 @@ var cms = {
                                 file = data.sites[i].file;
                             }
                         }
-                        cms.window.siteeditor.getdata(id, false, file);
+                        cms.w.siteeditor.getdata(id, false, file);
                     });
                 }
             },
             getdata: function(id, isnew, file) {
                 if (isnew) {
-                    cms.window.siteeditor.isnew=true;
+                    cms.w.siteeditor.isnew=true;
                     var data = {}
                     data.id = id;
                     data.file = "new-page.json",
@@ -258,16 +258,16 @@ var cms = {
                         }];
                     data.menuid = $('#content select').val();
                     data.visible = true;
-                    cms.window.siteeditor.build(data);
+                    cms.w.siteeditor.build(data);
                 } else {
                     $.getJSON(cms.core.addCK("data/" + file), function(data) {
-                        cms.window.siteeditor.build(data);
+                        cms.w.siteeditor.build(data);
                     });
                 }
             },
             build: function(data) {
                 cms.core.preloader.show();
-                cms.window.siteeditor.data=data;
+                cms.w.siteeditor.data=data;
                 $.getJSON(cms.core.addCK("data/__sitelist.json"), function(d) {
                     var code = [];
                     cms.core.preloader.hide();
@@ -295,14 +295,14 @@ var cms = {
                     code.push("</select></div>");
                     code.push("<input type='hidden' class='id' value='" + data.id + "'>");
                     code.push("<input type='hidden' class='file' value='" + data.file + "'>");
-                    code.push(cms.window.button("new element","newelement"))
+                    code.push(cms.w.button("new element","newelement"))
                     code.push("</div>");
                     code.push("<div class='contents'>");
                     code.push("</div>");
-                    code.push(cms.window.button("save", "save"));
+                    code.push(cms.w.button("save", "save"));
                     code.push("</div>");
                     $("#content").html(code.join(""));
-                    cms.window.siteeditor.getContents(data.content);
+                    cms.w.siteeditor.getContents(data.content);
                     $("#content .fixsiteparts .title").on('change', function() {
                         $("#content .fixsiteparts .file").val(cms.core.getFilenameFromTitle($(this).val()));
                     });
@@ -310,11 +310,11 @@ var cms = {
                         $("#content .fixsiteparts .file").val(cms.core.getFilenameFromTitle($(this).val()));
                     });
                     $(".save").click(function() {
-                        cms.window.siteeditor.saveData(true);
+                        cms.w.siteeditor.saveData(true);
                     });
                     $(".newelement").click(function(){
-                      cms.window.siteeditor.saveData(false,true);
-                      cms.window.siteeditor.newelement();
+                      cms.w.siteeditor.saveData(false,true);
+                      cms.w.siteeditor.newelement();
                     });
                 });
             },
@@ -337,52 +337,52 @@ var cms = {
               $("#content").html(code.join(""));
 
               $(".newelement a").click(function(){
-                cms.window.siteeditor.scrollTo="last";
+                cms.w.siteeditor.scrollTo="last";
               });
 
               $(".newelement .text").click(function(){
-                cms.window.siteeditor.data.content.push({type: "text",content: "This is a text"})
-                cms.window.siteeditor.build(cms.window.siteeditor.data)
+                cms.w.siteeditor.data.content.push({type: "text",content: "This is a text"})
+                cms.w.siteeditor.build(cms.w.siteeditor.data)
               });
 
               $(".newelement .code").click(function(){
-                cms.window.siteeditor.data.content.push({type: "code",content: "This is code"})
-                cms.window.siteeditor.build(cms.window.siteeditor.data)
+                cms.w.siteeditor.data.content.push({type: "code",content: "This is code"})
+                cms.w.siteeditor.build(cms.w.siteeditor.data)
               });
 
               $(".newelement .text_image").click(function(){
-                cms.window.siteeditor.data.content.push({type: "text_image",content: {image:"",text:"this is text",align:"left"}});
-                cms.window.siteeditor.build(cms.window.siteeditor.data)
+                cms.w.siteeditor.data.content.push({type: "text_image",content: {image:"",text:"this is text",align:"left"}});
+                cms.w.siteeditor.build(cms.w.siteeditor.data)
               });
 
               $(".newelement .image").click(function(){
-                cms.window.siteeditor.data.content.push({type: "image",content: {image:"",description:"description text here"}});
-                cms.window.siteeditor.build(cms.window.siteeditor.data)
+                cms.w.siteeditor.data.content.push({type: "image",content: {image:"",description:"description text here"}});
+                cms.w.siteeditor.build(cms.w.siteeditor.data)
               });
 
               $(".newelement .video").click(function(){
-                cms.window.siteeditor.data.content.push({type: "video",content:"www.youtube.com"});
-                cms.window.siteeditor.build(cms.window.siteeditor.data)
+                cms.w.siteeditor.data.content.push({type: "video",content:"www.youtube.com"});
+                cms.w.siteeditor.build(cms.w.siteeditor.data)
               });
 
               $(".newelement .html").click(function(){
-                cms.window.siteeditor.data.content.push({type: "html",content:"html here"});
-                cms.window.siteeditor.build(cms.window.siteeditor.data)
+                cms.w.siteeditor.data.content.push({type: "html",content:"html here"});
+                cms.w.siteeditor.build(cms.w.siteeditor.data)
               });
 
               $(".newelement .headline").click(function(){
-                cms.window.siteeditor.data.content.push({type: "headline",content:{type:2,content:"new headline"}});
-                cms.window.siteeditor.build(cms.window.siteeditor.data)
+                cms.w.siteeditor.data.content.push({type: "headline",content:{type:2,content:"new headline"}});
+                cms.w.siteeditor.build(cms.w.siteeditor.data)
               });
 
               $(".newelement .gallery").click(function(){
-                cms.window.siteeditor.data.content.push({type: "gallery", content:[]});
-                cms.window.siteeditor.build(cms.window.siteeditor.data);
+                cms.w.siteeditor.data.content.push({type: "gallery", content:[]});
+                cms.w.siteeditor.build(cms.w.siteeditor.data);
               });
 
               $(".newelement .downloads").click(function(){
-                cms.window.siteeditor.data.content.push({type: "downloads", content:[]});
-                cms.window.siteeditor.build(cms.window.siteeditor.data);
+                cms.w.siteeditor.data.content.push({type: "downloads", content:[]});
+                cms.w.siteeditor.build(cms.w.siteeditor.data);
               });
 
 
@@ -450,18 +450,18 @@ var cms = {
                     }
                 }
                 $("#content .contents").append(code.join(""));
-                if(cms.window.siteeditor.scrollTo=="last"){
+                if(cms.w.siteeditor.scrollTo=="last"){
                   $('html, body').animate({
                     scrollTop: $(".siteeditor > .contents > .item").last().offset().top
                   }, 500);
                 }else{
                   console.log("scrollto:");
-                  console.log(cms.window.siteeditor.scrollTo);
+                  console.log(cms.w.siteeditor.scrollTo);
 
-                  if(cms.window.siteeditor.scrollTo.length>0){
-                    console.log(cms.window.siteeditor.scrollTo);
+                  if(cms.w.siteeditor.scrollTo.length>0){
+                    console.log(cms.w.siteeditor.scrollTo);
                     $('html, body').animate({
-                      scrollTop: $(cms.window.siteeditor.scrollTo).offset().top
+                      scrollTop: $(cms.w.siteeditor.scrollTo).offset().top
                     }, 500);
                   }
                 }
@@ -504,30 +504,30 @@ var cms = {
                   setScrollTop();
                   elm.remove();
                   resetNav();
-                  cms.window.siteeditor.saveData(false);
+                  cms.w.siteeditor.saveData(false);
                   fixFuckingEditor();
                 });
                 $('.siteeditor > .contents > .item > .nav > .up, .siteeditor > .contents > .item > .nav > .down').click(function(){
-                    cms.window.siteeditor.scrollTo=$(this).parent().parent();
+                    cms.w.siteeditor.scrollTo=$(this).parent().parent();
                     $('html, body').animate({
-                       scrollTop: cms.window.siteeditor.scrollTo.offset().top
+                       scrollTop: cms.w.siteeditor.scrollTo.offset().top
                    }, 500)
                 });
                 $('.siteeditor > .contents > .item .itm .up, .siteeditor > .contents > .item .itm .down, .siteeditor > .contents > .item .itm .delete').click(function(){
-                    //cms.window.siteeditor.scrollTo=$(this).parent().parent().parent().parent();
-                    //console.log(cms.window.siteeditor.scrollTo);
-                    $('html, body').scrollTop(cms.window.siteeditor.scrollTo);
+                    //cms.w.siteeditor.scrollTo=$(this).parent().parent().parent().parent();
+                    //console.log(cms.w.siteeditor.scrollTo);
+                    $('html, body').scrollTop(cms.w.siteeditor.scrollTo);
 
                 });
               }
-              $('.imageuploader').append(cms.window.button("select image / add image","select_f"));
-              $('.galleryuploader').append(cms.window.button("select images / add images","select_f"));
-              $('.downloadsuploader').append(cms.window.button("select files / add files","select_f"));
+              $('.imageuploader').append(cms.w.button("select image / add image","select_f"));
+              $('.galleryuploader').append(cms.w.button("select images / add images","select_f"));
+              $('.downloadsuploader').append(cms.w.button("select files / add files","select_f"));
 
               $('.downloadsuploader .select_f').click(function(){
                 $('.siteeditor').hide();
                 var elm=$(this).parent().parent();
-                cms.window.files.create("uploads/","multi",function(data){
+                cms.w.files.create("uploads/","multi",function(data){
                   for(var i=0; i<data.length; i++){
 
                     elm.find(".downloadcontent").append("<div class='itm'><div class='nav'><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='filename'>"+data[i]+"</div><input type='text' value='"+data[i].split("/")[data[i].split("/").length-1]+"'></div>");
@@ -541,7 +541,7 @@ var cms = {
               $('.galleryuploader .select_f').click(function(){
                 $('.siteeditor').hide();
                 var elm=$(this).parent().parent();
-                cms.window.files.create("uploads/","multi",function(data){
+                cms.w.files.create("uploads/","multi",function(data){
                   for(var i=0; i<data.length; i++){
                     var parts=data[i].split("/");
                     var src="";
@@ -561,7 +561,7 @@ var cms = {
               $('.imageuploader .select_f').click(function(){
                 $('.siteeditor').hide();
                 var elm=$(this).parent().parent();
-                cms.window.files.create("uploads/","single",function(data){
+                cms.w.files.create("uploads/","single",function(data){
                   elm.find("img").attr("src",data[0]);
                   $('.siteeditor').show();
                   $('.filemanager').remove();
@@ -573,8 +573,8 @@ var cms = {
               //Set Scroll Position to scroll back
               function setScrollTop(){
 
-                cms.window.siteeditor.scrollTo=$('body').scrollTop();
-                if(cms.window.siteeditor.scrollTo==0)  cms.window.siteeditor.scrollTo=$('html').scrollTop();
+                cms.w.siteeditor.scrollTo=$('body').scrollTop();
+                if(cms.w.siteeditor.scrollTo==0)  cms.w.siteeditor.scrollTo=$('html').scrollTop();
 
               }
 
@@ -642,7 +642,7 @@ var cms = {
                 }
                 o.title = $(".fixsiteparts .title").val();
                 o.id = $(".fixsiteparts .id").val();
-                o.file = getUniqueFilename($(".fixsiteparts .file").val(),cms.window.site.data.sites);
+                o.file = getUniqueFilename($(".fixsiteparts .file").val(),cms.w.site.data.sites);
                 function getUniqueFilename(name,data){
                   var at=0;
                   name=name.split(".json").join("");
@@ -731,10 +731,10 @@ var cms = {
                     }
                 });
                 var deleteFile="";
-                if(cms.window.siteeditor.isnew==false && cms.window.siteeditor.data.file!=o.file){
-                  deleteFile=cms.window.siteeditor.data.file;
+                if(cms.w.siteeditor.isnew==false && cms.w.siteeditor.data.file!=o.file){
+                  deleteFile=cms.w.siteeditor.data.file;
                 }
-                cms.window.siteeditor.data=o;
+                cms.w.siteeditor.data=o;
                 if(toFile && !tmp){
                 cms.core.preloader.show();
                 $.post("api/savejson.php?file=" + o.file+"&delete="+deleteFile, {
@@ -774,7 +774,7 @@ var cms = {
                                     data: JSON.stringify(data)
                                 })
                                 .done(function(data) {
-                                    cms.window.site.create();
+                                    cms.w.site.create();
                                 });
                         });
 
@@ -789,10 +789,10 @@ var cms = {
 
             create: function() {
                 cms.core.preloader.show();
-                cms.window.start.menu.mark("menu");
+                cms.w.start.menu.mark("menu");
                 $.getJSON(cms.core.addCK("data/__sitelist.json"), function(data) {
-                    cms.window.menu.list(data);
-                    cms.window.menu.data = data;
+                    cms.w.menu.list(data);
+                    cms.w.menu.data = data;
                 });
             },
 
@@ -804,7 +804,7 @@ var cms = {
 
                 code.push("<div class='menucontainer'>")
                     //Menu select
-                code.push(cms.window.button("new menu", "newmenu"));
+                code.push(cms.w.button("new menu", "newmenu"));
 
                 createMenu(data.menu, 0);
 
@@ -830,16 +830,16 @@ var cms = {
                 })
 
                 $(".newmenu").click(function() {
-                    cms.window.menueditor.create(data, "new");
+                    cms.w.menueditor.create(data, "new");
                 })
                 $(".listitem .title").click(function() {
-                    cms.window.menueditor.create(data, $(this).parent().attr("data-id"));
+                    cms.w.menueditor.create(data, $(this).parent().attr("data-id"));
                 });
                 $(".listitem .remove").click(function() {
                   var r = confirm("Delete?");
                   if (r == true) {
                     $(this).parent().remove();
-                    cms.window.menueditor.saveAsView();
+                    cms.w.menueditor.saveAsView();
                   }
 
                 });
@@ -850,7 +850,7 @@ var cms = {
                     elmat=elmat.prev();
                   }
                   elm.insertBefore(elmat);
-                  cms.window.menueditor.saveAsView();
+                  cms.w.menueditor.saveAsView();
                 });
                 $('.listitem .down').click(function(){
                   var elm=$(this).parent();
@@ -859,7 +859,7 @@ var cms = {
                     elmat=elmat.next();
                   }
                   elm.insertAfter(elmat);
-                  cms.window.menueditor.saveAsView();
+                  cms.w.menueditor.saveAsView();
                 });
                 $(".listitem .addsub").click(function() {
                     var elm = $(this).parent();
@@ -872,7 +872,7 @@ var cms = {
                             target: "",
                             sub: []
                         };
-                        cms.window.menueditor.buildeditor(mo, elm.attr("data-id"));
+                        cms.w.menueditor.buildeditor(mo, elm.attr("data-id"));
                     });
                 });
             }
@@ -905,10 +905,10 @@ var cms = {
                             target: "",
                             sub: []
                         };
-                        cms.window.menueditor.buildeditor(mo, 0);
+                        cms.w.menueditor.buildeditor(mo, 0);
                     });
                 } else {
-                    cms.window.menueditor.buildeditor(mo, 0);
+                    cms.w.menueditor.buildeditor(mo, 0);
                 }
 
             },
@@ -935,7 +935,7 @@ var cms = {
                 code.push("</select>")
                 code.push("</div>");
                 code.push("<div class='row'><label>linkurl</label><input class='action' value='" + o.action + "'></div>");
-                code.push(cms.window.button("save", "save"));
+                code.push(cms.w.button("save", "save"));
                 code.push("</div>");
                 $("#content").append(code.join(""));
                 $('.menucontainer').hide();
@@ -952,7 +952,7 @@ var cms = {
                             $(".menucontainer").append("<div class='listitem' data-id='" + $(".menueditor .id").val() + "' data-target='" + $(".menueditor .target").val() + "' data-action='" + $(".menueditor .action").val() + "'><span class='title'>" + $(".menueditor .title").val() + "</span><a class='remove'>x</a><a class='addsub'>add sub</a><div class='clearline'></div><div class='sub'></div></div>");
                         }
                     }
-                    cms.window.menueditor.saveAsView();
+                    cms.w.menueditor.saveAsView();
                 });
 
             },
@@ -975,12 +975,12 @@ var cms = {
                 });
                 return tmp;
             }
-            cms.window.menu.data.menu = menuNew;
+            cms.w.menu.data.menu = menuNew;
             $.post("api/savejson.php?file=__sitelist.json", {
-                    data: JSON.stringify(cms.window.menu.data)
+                    data: JSON.stringify(cms.w.menu.data)
                 })
                 .done(function(data) {
-                    cms.window.menu.create();
+                    cms.w.menu.create();
             });
           }
         },
@@ -991,23 +991,23 @@ var cms = {
             handle:function(){},
             create: function(dir, selectmode="no", handle=function(){}) {
 
-              cms.window.files.selectmode=selectmode;
-              cms.window.files.handle=handle;
+              cms.w.files.selectmode=selectmode;
+              cms.w.files.handle=handle;
 
               if(dir!=undefined && dir!=""){
-                cms.window.files.dir=dir;
+                cms.w.files.dir=dir;
               }else{
-                cms.window.files.dir=cms.window.files.startdir;
+                cms.w.files.dir=cms.w.files.startdir;
               }
-              cms.window.start.menu.mark("files");
+              cms.w.start.menu.mark("files");
 
               var code=[];
               code.push('<div class="filemanager">');
-                code.push('<div class="nav"><div class="folder"></div><h2>Create new Folder</h2><input class="foldername" placeholder="name of new folder"></input>'+cms.window.button(" create new folder","newfolder")+"<br>"+cms.window.button("delete","delete")+'</div>');
+                code.push('<div class="nav"><div class="folder"></div><h2>Create new Folder</h2><input class="foldername" placeholder="name of new folder"></input>'+cms.w.button(" create new folder","newfolder")+"<br>"+cms.w.button("delete","delete")+'</div>');
                 code.push("<h2>upload new files</h2>");
                 code.push('<div class="uploader"></div>');
                 if(selectmode!="no"){
-                  code.push(cms.window.button("select files","select_f"))
+                  code.push(cms.w.button("select files","select_f"))
                 }
                 code.push('<div class="files"></div>');
               code.push('<div>');
@@ -1018,14 +1018,14 @@ var cms = {
                 $("#content").append(code.join(""));
               }
 
-              cms.window.files.addFolderNav();
+              cms.w.files.addFolderNav();
 
-              $('.uploader').ajaxUploader(true,function(){cms.window.files.create(cms.window.files.dir,cms.window.files.selectmode,cms.window.files.handle)},function(data){alert("upload error:"+data)},cms.window.files.dir);
+              $('.uploader').ajaxUploader(true,function(){cms.w.files.create(cms.w.files.dir,cms.w.files.selectmode,cms.w.files.handle)},function(data){alert("upload error:"+data)},cms.w.files.dir);
 
               cms.core.preloader.show();
 
-              $.getJSON(cms.core.addCK("api/getdirlist.php?dir="+cms.window.files.dir), function(data) {
-                  cms.window.files.addFiles(data);
+              $.getJSON(cms.core.addCK("api/getdirlist.php?dir="+cms.w.files.dir), function(data) {
+                  cms.w.files.addFiles(data);
               });
               // Selectmode button
               $('.filemanager .select_f').click(function(){
@@ -1036,10 +1036,10 @@ var cms = {
                 handle(files);
               });
               $('.filemanager .newfolder').click(function(){
-                var newdir=cms.window.files.dir+$(".filemanager .foldername").val()+"/";
+                var newdir=cms.w.files.dir+$(".filemanager .foldername").val()+"/";
                 cms.core.preloader.show();
                 $.getJSON(cms.core.addCK("api/createfolder.php?dir="+newdir), function(data) {
-                    cms.window.files.create(newdir,cms.window.files.selectmode,cms.window.files.handle);
+                    cms.w.files.create(newdir,cms.w.files.selectmode,cms.w.files.handle);
                 });
               });
               $(".filemanager .delete").click(function(){
@@ -1064,7 +1064,7 @@ var cms = {
                 if (r == true) {
                   cms.core.preloader.show();
                   $.getJSON(cms.core.addCK("api/delete.php?files="+toDelete+","+thumps), function(data) {
-                      cms.window.files.create(cms.window.files.dir,cms.window.files.selectmode,cms.window.files.handle);
+                      cms.w.files.create(cms.w.files.dir,cms.w.files.selectmode,cms.w.files.handle);
                   });
                 }
               });
@@ -1073,23 +1073,23 @@ var cms = {
             },
             addFolderNav:function(){
               var at="";
-              var path=cms.window.files.dir.split("/");
+              var path=cms.w.files.dir.split("/");
               var navCode=[];
               for(var i=0; i<path.length-1; i++){
                 at+=path[i]+"/";
                 navCode.push('<a data-path="'+at+'">'+path[i]+'</a>');
               }
-              if(path.length>2)navCode.push(cms.window.button("delete folder","deletefolder"));
+              if(path.length>2)navCode.push(cms.w.button("delete folder","deletefolder"));
               $('.filemanager > .nav > .folder').html(navCode.join(""));
               $('.filemanager > .nav > .folder > a').click(function(){
-                cms.window.files.create($(this).attr("data-path"),cms.window.files.selectmode,cms.window.files.handle);
+                cms.w.files.create($(this).attr("data-path"),cms.w.files.selectmode,cms.w.files.handle);
               });
               $('.filemanager .deletefolder').click(function(){
                 var folderToDelete=$(".filemanager .nav .folder a").last().attr("data-path");
                 var r=confirm("delete folder: "+folderToDelete+"?");
                 if(r){
                   $.getJSON(cms.core.addCK("api/deletedir.php?dir="+folderToDelete), function(data) {
-                      cms.window.files.create("uploads/",cms.window.files.selectmode,cms.window.files.handle);
+                      cms.w.files.create("uploads/",cms.w.files.selectmode,cms.w.files.handle);
                   });
                 }
               });
@@ -1105,17 +1105,17 @@ var cms = {
                   data.files[i]=parts[parts.length-1];
                   var style="";
                   if(type=="image"){
-                    style='style="background:url('+cms.window.files.dir+"thumps/"+data.files[i]+')"';
+                    style='style="background:url('+cms.w.files.dir+"thumps/"+data.files[i]+')"';
                   }
-                  $('#content > .filemanager > .files').append('<div class="file '+type+'" '+style+' data-path="'+cms.window.files.dir+data.files[i]+'"><div class="title">'+data.files[i]+'</div></div>')
+                  $('#content > .filemanager > .files').append('<div class="file '+type+'" '+style+' data-path="'+cms.w.files.dir+data.files[i]+'"><div class="title">'+data.files[i]+'</div></div>')
                 }
               }
               $('#content > .filemanager .files').append('<div class="clear"></div>');
               $('.filemanager .files .file').click(function(){
                 if($(this).hasClass("folder")){
-                  cms.window.files.create($(this).attr("data-path")+"/",cms.window.files.selectmode,cms.window.files.handle);
+                  cms.w.files.create($(this).attr("data-path")+"/",cms.w.files.selectmode,cms.w.files.handle);
                 }else{
-                  if(cms.window.files.selectmode=="single"){
+                  if(cms.w.files.selectmode=="single"){
                     $(".filemanager .file.selected").removeClass("selected");
                   }
                   if($(this).hasClass("selected")){
@@ -1150,29 +1150,29 @@ var cms = {
         newsletter: {
             data:[],
             create: function() {
-                cms.window.start.menu.mark("newsletter");
+                cms.w.start.menu.mark("newsletter");
                 cms.core.preloader.show();
                 $.getJSON(cms.core.addCK("/admin/data/__newsletterlist.json"), function(data) {
-                  cms.window.newsletter.data=data;
-                  cms.window.newsletter.build();
+                  cms.w.newsletter.data=data;
+                  cms.w.newsletter.build();
                 });
             },
             build:function(){
               var code=[];
               code.push("<div class='newsletter'>");
-                code.push("<div class='topnav'>"+cms.window.button("Newsletters","newsletters")+cms.window.button("Receivers","receivers")+"</div>");
+                code.push("<div class='topnav'>"+cms.w.button("Newsletters","newsletters")+cms.w.button("Receivers","receivers")+"</div>");
                 code.push("<div class='newslettercontent'></div>")
               code.push("</div>");
               $("#content").html(code.join(""));
-              $('.newsletter > .topnav > .newsletters').click(cms.window.newsletter.buildnewsletterlist);
-              $('.newsletter > .topnav > .receivers').click(cms.window.newsletter.buildReceiverlist);
-              cms.window.newsletter.buildnewsletterlist();
+              $('.newsletter > .topnav > .newsletters').click(cms.w.newsletter.buildnewsletterlist);
+              $('.newsletter > .topnav > .receivers').click(cms.w.newsletter.buildReceiverlist);
+              cms.w.newsletter.buildnewsletterlist();
             },
             buildnewsletterlist:function(){
               cms.core.preloader.hide();
-              var data=cms.window.newsletter.data.newsletters;
+              var data=cms.w.newsletter.data.newsletters;
               var code=[];
-              code.push("<div class='secnav'>"+cms.window.button("new newsletter","new")+"</div>");
+              code.push("<div class='secnav'>"+cms.w.button("new newsletter","new")+"</div>");
               code.push("<div class='list'>");
               for(var i=0; i<data.length; i++){
                 code.push("<div class='item' data-src='"+data[i].file+"'><span class='title'>"+data[i].title+"</span><a class='delete'>delete</a></div>");
@@ -1180,10 +1180,10 @@ var cms = {
               code.push("</div>");
               $('.newslettercontent').html(code.join(""));
               $('.newslettercontent > .secnav > .new').click(function(){
-                cms.window.newsletter.buildNewsletterEditor("new");
+                cms.w.newsletter.buildNewsletterEditor("new");
               });
               $('.newslettercontent > .list > .item > .title').click(function(){
-                cms.window.newsletter.buildNewsletterEditor($(this).parent().attr("data-src"));
+                cms.w.newsletter.buildNewsletterEditor($(this).parent().attr("data-src"));
               });
             },
             buildNewsletterEditor:function(file){
@@ -1199,9 +1199,9 @@ var cms = {
             },
             buildReceiverlist:function(){
               cms.core.preloader.hide();
-              var data=cms.window.newsletter.data.receiverlists;
+              var data=cms.w.newsletter.data.receiverlists;
               var code=[];
-              code.push("<div class='secnav'>"+cms.window.button("new receiverlist","new")+"</div>");
+              code.push("<div class='secnav'>"+cms.w.button("new receiverlist","new")+"</div>");
               code.push("<div class='list'>");
               for(var i=0; i<data.length; i++){
                 code.push("<div class='listitem' data-src='receiverlist_"+data[i].id+".json' data-id='"+data[i].id+"'><span class='title'>"+data[i].title+"</span><a class='remove'>delete</a></div>");
@@ -1209,24 +1209,24 @@ var cms = {
               code.push("</div>");
               $('.newslettercontent').html(code.join(""));
               $('.newslettercontent > .secnav > .new').click(function(){
-                cms.window.newsletter.buildReceiverlistEditor("new");
+                cms.w.newsletter.buildReceiverlistEditor("new");
               });
               $('.newslettercontent > .list > .listitem > .title').click(function(){
-                cms.window.newsletter.buildReceiverlistEditor($(this).parent().attr("data-src"));
+                cms.w.newsletter.buildReceiverlistEditor($(this).parent().attr("data-src"));
               });
               $('.newslettercontent > .list > .listitem > .remove').click(function(){
                 var id=$(this).parent().attr("data-id");
                 var newData=[];
-                for(var i=0; i<cms.window.newsletter.data.receiverlists.length; i++){
-                  if(cms.window.newsletter.data.receiverlists[i].id!=id){
-                    newData.push(cms.window.newsletter.data.receiverlists[i]);
+                for(var i=0; i<cms.w.newsletter.data.receiverlists.length; i++){
+                  if(cms.w.newsletter.data.receiverlists[i].id!=id){
+                    newData.push(cms.w.newsletter.data.receiverlists[i]);
                   }
                 }
-                cms.window.newsletter.data.receiverlists=newData;
+                cms.w.newsletter.data.receiverlists=newData;
                 $.post("api/savejson.php?file=__newsletterlist.json&delete=receiverlist_"+id+".json", {
-                  data: JSON.stringify(cms.window.newsletter.data)
+                  data: JSON.stringify(cms.w.newsletter.data)
                 }).done(function(){
-                  cms.window.newsletter.buildReceiverlist();
+                  cms.w.newsletter.buildReceiverlist();
                 })
               });
             },
@@ -1236,7 +1236,7 @@ var cms = {
                 $.getJSON(cms.core.addCK("api/getid.php"), function(data) {
                   var o={title:"new receiverlist",id:data.id,receivers:[]};
                   var o2={title:"new receiverlist",id:data.id};
-                  cms.window.newsletter.data.receiverlists.push(o2);
+                  cms.w.newsletter.data.receiverlists.push(o2);
                   handleData(o);
                 });
 
@@ -1254,18 +1254,18 @@ var cms = {
                   code.push("<input class='title' placeholder='title of reiceiver list' type='text' value='"+o.title+"'>");
                   code.push("<textarea placeholder='receivers one per line'>"+o.receivers.join("\r\n")+"</textarea>");
                   code.push("<input type='hidden' class='id' value='"+o.id+"'>");
-                  code.push(cms.window.button("save","save"));
+                  code.push(cms.w.button("save","save"));
                 code.push("</div>");
                 $(".newslettercontent").html(code.join(""));
                 $(".receiverList .save").click(function(){
                   cms.core.preloader.show();
-                  for(var i=0; i<cms.window.newsletter.data.receiverlists.length; i++){
-                    if(cms.window.newsletter.data.receiverlists[i].id==$(".receiverList .id").val()){
-                      cms.window.newsletter.data.receiverlists[i].title=$(".receiverList .title").val();
+                  for(var i=0; i<cms.w.newsletter.data.receiverlists.length; i++){
+                    if(cms.w.newsletter.data.receiverlists[i].id==$(".receiverList .id").val()){
+                      cms.w.newsletter.data.receiverlists[i].title=$(".receiverList .title").val();
                     }
                   }
                   $.post("api/savejson.php?file=__newsletterlist.json", {
-                    data: JSON.stringify(cms.window.newsletter.data)
+                    data: JSON.stringify(cms.w.newsletter.data)
                   });
                   var listdata={};
                   listdata.id=$(".receiverList .id").val();
@@ -1275,7 +1275,7 @@ var cms = {
                   $.post("api/crypt.php?mode=save&file=receiverlist_"+$(".receiverList .id").val()+".json", {
                     data: JSON.stringify(listdata)
                   }).done(function(){
-                    cms.window.newsletter.buildReceiverlist();
+                    cms.w.newsletter.buildReceiverlist();
                   });
                 });
               }
