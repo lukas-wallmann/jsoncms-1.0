@@ -7,7 +7,7 @@ var cms = {
     },
     c: {
         ck: function(url) {
-            var ck = new Date().getTime() + cms.c.getToken(4);
+            var ck = new Date().getTime() + cms.c.gT(4);
             if (url.split("?").length == 1) {
                 return url + "?ck=" + ck;
             } else {
@@ -24,7 +24,10 @@ var cms = {
             $("#preloader").remove();
           }
         },
-        getToken: function(l) {
+        btn: function(name, cl) {
+            return "<button class='" + cl + "'>" + name + "</button>";
+        },
+        gT: function(l) {
             var chars = "abcdefghijklmnopqrstuvwxyz1234567890";
             var token = [];
             for (var i = 0; i < l; i++) {
@@ -32,7 +35,7 @@ var cms = {
             }
             return token.join("");
         },
-        getFilenameFromTitle: function(t) {
+        gFFT: function(t) {
             t = t.toLowerCase();
             t = t.replace(/[^a-zA-Z0-9 ]/g, "");
             t = t.split(" ").join("-");
@@ -43,9 +46,7 @@ var cms = {
         },
     },
     w: {
-        button: function(name, cl) {
-            return "<button class='" + cl + "'>" + name + "</button>";
-        },
+
         start: {
             create: function() {
                 var code = [];
@@ -147,7 +148,7 @@ var cms = {
                 }
 
                 code.push("</select>");
-                code.push(cms.w.button("new site", "newsite"));
+                code.push(cms.c.btn("new site", "newsite"));
 
                 //List sites
                 for (var i = 0; i < data.sites.length; i++) {
@@ -295,19 +296,19 @@ var cms = {
                     code.push("</select></div>");
                     code.push("<input type='hidden' class='id' value='" + data.id + "'>");
                     code.push("<input type='hidden' class='file' value='" + data.file + "'>");
-                    code.push(cms.w.button("new element","newelement"))
+                    code.push(cms.c.btn("new element","newelement"))
                     code.push("</div>");
                     code.push("<div class='contents'>");
                     code.push("</div>");
-                    code.push(cms.w.button("save", "save"));
+                    code.push(cms.c.btn("save", "save"));
                     code.push("</div>");
                     $("#content").html(code.join(""));
                     cms.w.siteeditor.getContents(data.content);
                     $("#content .fixsiteparts .title").on('change', function() {
-                        $("#content .fixsiteparts .file").val(cms.c.getFilenameFromTitle($(this).val()));
+                        $("#content .fixsiteparts .file").val(cms.c.gFFT($(this).val()));
                     });
                     $("#content .fixsiteparts .title").keyup(function() {
-                        $("#content .fixsiteparts .file").val(cms.c.getFilenameFromTitle($(this).val()));
+                        $("#content .fixsiteparts .file").val(cms.c.gFFT($(this).val()));
                     });
                     $(".save").click(function() {
                         cms.w.siteeditor.saveData(true);
@@ -520,9 +521,9 @@ var cms = {
 
                 });
               }
-              $('.imageuploader').append(cms.w.button("select image / add image","select_f"));
-              $('.galleryuploader').append(cms.w.button("select images / add images","select_f"));
-              $('.downloadsuploader').append(cms.w.button("select files / add files","select_f"));
+              $('.imageuploader').append(cms.c.btn("select image / add image","select_f"));
+              $('.galleryuploader').append(cms.c.btn("select images / add images","select_f"));
+              $('.downloadsuploader').append(cms.c.btn("select files / add files","select_f"));
 
               $('.downloadsuploader .select_f').click(function(){
                 $('.siteeditor').hide();
@@ -804,7 +805,7 @@ var cms = {
 
                 code.push("<div class='menucontainer'>")
                     //Menu select
-                code.push(cms.w.button("new menu", "newmenu"));
+                code.push(cms.c.btn("new menu", "newmenu"));
 
                 createMenu(data.menu, 0);
 
@@ -935,7 +936,7 @@ var cms = {
                 code.push("</select>")
                 code.push("</div>");
                 code.push("<div class='row'><label>linkurl</label><input class='action' value='" + o.action + "'></div>");
-                code.push(cms.w.button("save", "save"));
+                code.push(cms.c.btn("save", "save"));
                 code.push("</div>");
                 $("#content").append(code.join(""));
                 $('.menucontainer').hide();
@@ -1003,11 +1004,11 @@ var cms = {
 
               var code=[];
               code.push('<div class="filemanager">');
-                code.push('<div class="nav"><div class="folder"></div><h2>Create new Folder</h2><input class="foldername" placeholder="name of new folder"></input>'+cms.w.button(" create new folder","newfolder")+"<br>"+cms.w.button("delete","delete")+'</div>');
+                code.push('<div class="nav"><div class="folder"></div><h2>Create new Folder</h2><input class="foldername" placeholder="name of new folder"></input>'+cms.c.btn(" create new folder","newfolder")+"<br>"+cms.c.btn("delete","delete")+'</div>');
                 code.push("<h2>upload new files</h2>");
                 code.push('<div class="uploader"></div>');
                 if(selectmode!="no"){
-                  code.push(cms.w.button("select files","select_f"))
+                  code.push(cms.c.btn("select files","select_f"))
                 }
                 code.push('<div class="files"></div>');
               code.push('<div>');
@@ -1079,7 +1080,7 @@ var cms = {
                 at+=path[i]+"/";
                 navCode.push('<a data-path="'+at+'">'+path[i]+'</a>');
               }
-              if(path.length>2)navCode.push(cms.w.button("delete folder","deletefolder"));
+              if(path.length>2)navCode.push(cms.c.btn("delete folder","deletefolder"));
               $('.filemanager > .nav > .folder').html(navCode.join(""));
               $('.filemanager > .nav > .folder > a').click(function(){
                 cms.w.files.create($(this).attr("data-path"),cms.w.files.selectmode,cms.w.files.handle);
@@ -1160,7 +1161,7 @@ var cms = {
             build:function(){
               var code=[];
               code.push("<div class='newsletter'>");
-                code.push("<div class='topnav'>"+cms.w.button("Newsletters","newsletters")+cms.w.button("Receivers","receivers")+"</div>");
+                code.push("<div class='topnav'>"+cms.c.btn("Newsletters","newsletters")+cms.c.btn("Receivers","receivers")+"</div>");
                 code.push("<div class='newslettercontent'></div>")
               code.push("</div>");
               $("#content").html(code.join(""));
@@ -1172,7 +1173,7 @@ var cms = {
               cms.c.pl.hide();
               var data=cms.w.newsletter.data.newsletters;
               var code=[];
-              code.push("<div class='secnav'>"+cms.w.button("new newsletter","new")+"</div>");
+              code.push("<div class='secnav'>"+cms.c.btn("new newsletter","new")+"</div>");
               code.push("<div class='list'>");
               for(var i=0; i<data.length; i++){
                 code.push("<div class='item' data-src='"+data[i].file+"'><span class='title'>"+data[i].title+"</span><a class='delete'>delete</a></div>");
@@ -1201,7 +1202,7 @@ var cms = {
               cms.c.pl.hide();
               var data=cms.w.newsletter.data.receiverlists;
               var code=[];
-              code.push("<div class='secnav'>"+cms.w.button("new receiverlist","new")+"</div>");
+              code.push("<div class='secnav'>"+cms.c.btn("new receiverlist","new")+"</div>");
               code.push("<div class='list'>");
               for(var i=0; i<data.length; i++){
                 code.push("<div class='listitem' data-src='receiverlist_"+data[i].id+".json' data-id='"+data[i].id+"'><span class='title'>"+data[i].title+"</span><a class='remove'>delete</a></div>");
@@ -1254,7 +1255,7 @@ var cms = {
                   code.push("<input class='title' placeholder='title of reiceiver list' type='text' value='"+o.title+"'>");
                   code.push("<textarea placeholder='receivers one per line'>"+o.receivers.join("\r\n")+"</textarea>");
                   code.push("<input type='hidden' class='id' value='"+o.id+"'>");
-                  code.push(cms.w.button("save","save"));
+                  code.push(cms.c.btn("save","save"));
                 code.push("</div>");
                 $(".newslettercontent").html(code.join(""));
                 $(".receiverList .save").click(function(){
