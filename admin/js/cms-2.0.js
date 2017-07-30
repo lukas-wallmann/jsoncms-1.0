@@ -45,7 +45,7 @@ var cms={
         var chars = "abcdefghijklmnopqrstuvwxyz1234567890";
         var token = [];
         for (var i = 0; i < l; i++) {
-            token.push(chars.charAt(Math.round(Math.random() * chars.length)));
+            token.push(chars.charAt(Math.round(Math.random() * 36)));
         }
         return token.join("");
     },
