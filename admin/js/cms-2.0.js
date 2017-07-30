@@ -9,6 +9,8 @@ var cms={
 //Core Functions
 
   c:{
+
+    //Cachekiller
     ck: function(url) {
         var ck = new Date().getTime() + cms.c.gT(4);
         if (url.split("?").length == 1) {
@@ -17,6 +19,9 @@ var cms={
             return url + "&ck=" + ck;
         }
     },
+
+
+    //preloader
     pl:{
       show:function(){
         if($("#preloader").length==0){
@@ -27,9 +32,15 @@ var cms={
         $("#preloader").remove();
       }
     },
+
+
+    //button
     btn: function(name, cl) {
         return "<button class='" + cl + "'>" + name + "</button>";
     },
+
+
+    //Get token
     gT: function(l) {
         var chars = "abcdefghijklmnopqrstuvwxyz1234567890";
         var token = [];
@@ -38,6 +49,9 @@ var cms={
         }
         return token.join("");
     },
+
+
+    //Get File from Title
     gFFT: function(t) {
         t = t.toLowerCase();
         t = t.replace(/[^a-zA-Z0-9 ]/g, "");
@@ -47,10 +61,11 @@ var cms={
         t = t + ".json";
         return t;
     }
-  },
+
+  }, //END cms.c
 
 
-// WINDOWS
+// WINDOWS of cms
 
   w:{
 
