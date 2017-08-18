@@ -45,8 +45,8 @@
         var s="";
         if(p!="")s="/"
         conf1.push('$basedir=dirname(__FILE__);');
-        conf1.push('$baseurlws="'+p+'"');
-        conf1.push('$baseurl="'+s+'".$baseurlws');
+        conf1.push('$baseurlws="'+p+'";');
+        conf1.push('$baseurl="'+s+'".$baseurlws;');
 
         var conf2=[];
 
