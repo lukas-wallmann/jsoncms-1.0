@@ -420,34 +420,34 @@ button.select_f {
 }
 
 .newelement a.text {
-    background-image: url("/admin/img/ico-text.png");
+    background-image: url("../img/ico-text.png");
 }
 .newelement a.headline {
-    background-image: url("/admin/img/ico-headline.png");
+    background-image: url("../img/ico-headline.png");
 }
 .newelement .text_image {
-    background-image: url("/admin/img/ico-text_image.png");
+    background-image: url("../img/ico-text_image.png");
 }
 .newelement .image {
-    background-image: url("/admin/img/ico-image.png");
+    background-image: url("../img/ico-image.png");
 }
 .newelement .video {
-    background-image: url("/admin/img/play.png");
+    background-image: url("../img/play.png");
 }
 .newelement .html {
-    background-image: url("/admin/img/ico-html.png");
+    background-image: url("../img/ico-html.png");
 }
 .newelement .gallery {
-    background-image: url("/admin/img/ico-gallery.png");
+    background-image: url("../img/ico-gallery.png");
 }
 .newelement .gallery {
-    background-image: url("/admin/img/ico-gallery.png");
+    background-image: url("../img/ico-gallery.png");
 }
 .newelement .downloads {
-    background-image: url("/admin/img/ico-downloads.png");
+    background-image: url("../img/ico-downloads.png");
 }
 .newelement .code {
-    background-image: url("/admin/img/ico-code.png");
+    background-image: url("../img/ico-code.png");
 }
 
 .receiverList input {
