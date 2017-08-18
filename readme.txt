@@ -2,7 +2,7 @@
 
 2. write a username and password and click to generate config
 
-3. than create the two configfiles
+3. than write the two configfiles
 /config.php
 /admin/library/config.php
 
@@ -11,4 +11,3 @@
 ------
 alternative you can edit the config files that already exist
 but you need to change the aes passwords in /admin/library/config.php
-otherwise anyone could read your maillists etc
