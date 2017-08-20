@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>Json CMS</title>
-<link rel="stylesheet" type="text/css" href="css/cms.css?ck=<?php echo rand().rand().rand() ?>">
+<link rel="stylesheet" type="text/css" href="css/cms.css">
 <script src="js/jquery.js"></script>
 <script src="ckeditor/ckeditor.js"></script>
 <script src="js/ajaxuploader.js"></script>
