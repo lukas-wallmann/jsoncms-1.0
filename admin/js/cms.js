@@ -1245,16 +1245,21 @@ cms.w.files= {
           return "folder";
         }else{
           var types=[["text",["doc","odt","txt","docx","html","json"]],["image",["jpg","png","gif","jpeg"]],["archive",["zip","7z","tar","gz","rar"]]];
+
           for(var i=0; i<types.length; i++){
             var type=types[i][0];
+
             for(var j=0; j<types[i][1].length; j++){
               if(types[i][1][j]==ext){
                 return type;
                 break;
               }
             }
+
           }
+          
         }
+
       }
     }
 
