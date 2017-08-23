@@ -1239,11 +1239,14 @@ cms.w.files= {
       });
 
       function getType(file){
+
         var parts=file.split(".");
         var ext=parts[parts.length-1];
+        
         if(ext=="" || parts.length==1){
           return "folder";
         }else{
+
           var types=[["text",["doc","odt","txt","docx","html","json"]],["image",["jpg","png","gif","jpeg"]],["archive",["zip","7z","tar","gz","rar"]]];
 
           for(var i=0; i<types.length; i++){
@@ -1257,10 +1260,12 @@ cms.w.files= {
             }
 
           }
-          
+
         }
 
       }
+
+
     }
 
 }
