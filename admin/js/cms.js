@@ -204,9 +204,11 @@ cms.w.site= {
         $("#content > .newsite").click(function() {
             cms.w.siteeditor.create("new");
         });
+
         $("#content > .listitem > .title").click(function() {
             cms.w.siteeditor.create($(this).parent().attr("data-id"));
         });
+
         $('.listitem .up').click(function(){
           var elm=$(this).parent();
           var elmat=elm.prev();
@@ -216,6 +218,7 @@ cms.w.site= {
           elm.insertBefore(elmat);
           cms.w.site.saveAsView();
         });
+
         $('.listitem .down').click(function(){
           var elm=$(this).parent();
           var elmat=elm.next();
@@ -225,8 +228,9 @@ cms.w.site= {
           elm.insertAfter(elmat);
           cms.w.site.saveAsView();
         });
+
         $(".listitem .remove").click(function() {
-          var r = confirm("Delete?");
+          var r = confirm("Delete: "+$(this).parent().find(".title").text()+"?");
           if (r == true) {
             var elm = $(this);
             cms.c.pl.show();
@@ -253,16 +257,22 @@ cms.w.site= {
 
 //siteeditor
 cms.w.siteeditor= {
+
     data:{},
     isnew:false,
     scrollTo:"",
+
     create: function(id) {
+
         if (id == "new") {
+
             cms.c.pl.show();
             $.getJSON(cms.c.ck("api/getid.php"), function(data) {
                 cms.w.siteeditor.getdata(data.id, true, "");
             });
+
         } else {
+
             cms.c.pl.show();
             $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
 
@@ -274,10 +284,14 @@ cms.w.siteeditor= {
                 }
                 cms.w.siteeditor.getdata(id, false, file);
             });
+
         }
     },
+
     getdata: function(id, isnew, file) {
+
         if (isnew) {
+
             cms.w.siteeditor.isnew=true;
             var data = {}
             data.id = id;
@@ -290,16 +304,23 @@ cms.w.siteeditor= {
             data.menuid = $('#content select').val();
             data.visible = true;
             cms.w.siteeditor.build(data);
+
         } else {
+
             $.getJSON(cms.c.ck("data/" + file), function(data) {
                 cms.w.siteeditor.build(data);
             });
+
         }
     },
+
     build: function(data) {
+
         cms.c.pl.show();
         cms.w.siteeditor.data=data;
+
         $.getJSON(cms.c.ck("data/__sitelist.json"), function(d) {
+
             var code = [];
             cms.c.pl.hide();
             code.push("<div class='siteeditor'><div class='fixsiteparts'>");
@@ -322,7 +343,9 @@ cms.w.siteeditor= {
                         createMenu(da[i].sub, depth + 1)
                     }
                 }
+
             }
+
             code.push("</select></div>");
             code.push("<input type='hidden' class='id' value='" + data.id + "'>");
             code.push("<input type='hidden' class='file' value='" + data.file + "'>");
@@ -333,22 +356,30 @@ cms.w.siteeditor= {
             code.push(cms.c.btn("save", "save"));
             code.push("</div>");
             $("#content").html(code.join(""));
+
             cms.w.siteeditor.getContents(data.content);
+
             $("#content .fixsiteparts .title").on('change', function() {
                 $("#content .fixsiteparts .file").val(cms.c.gFFT($(this).val()));
             });
+
             $("#content .fixsiteparts .title").keyup(function() {
                 $("#content .fixsiteparts .file").val(cms.c.gFFT($(this).val()));
             });
+
             $(".save").click(function() {
                 cms.w.siteeditor.saveData(true);
             });
+
             $(".newelement").click(function(){
               cms.w.siteeditor.saveData(false,true);
               cms.w.siteeditor.newelement();
             });
+
         });
+
     },
+
     newelement:function(){
       //$(".siteeditor").hide();
 
@@ -418,9 +449,13 @@ cms.w.siteeditor= {
 
 
     },
+
     getContents: function(data) {
+
         var code = [];
+
         for (var i = 0; i < data.length; i++) {
+
             switch (data[i].type) {
                 case "text":
                   code.push("<div class='item text' data-type='text'><div class='nav'><h2>text</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><textarea class='editor'>" + data[i].content + "</textarea></div>")
@@ -476,30 +511,31 @@ cms.w.siteeditor= {
                     code.push("</div></div>");
                     break;
 
-
-
             }
         }
+
         $("#content .contents").append(code.join(""));
+
         if(cms.w.siteeditor.scrollTo=="last"){
+
           $('html, body').animate({
             scrollTop: $(".siteeditor > .contents > .item").last().offset().top
           }, 500);
+
         }else{
-          console.log("scrollto:");
-          console.log(cms.w.siteeditor.scrollTo);
 
           if(cms.w.siteeditor.scrollTo.length>0){
-            console.log(cms.w.siteeditor.scrollTo);
             $('html, body').animate({
               scrollTop: $(cms.w.siteeditor.scrollTo).offset().top
             }, 500);
           }
+
         }
 
       var dd=1;
 
       function resetNav(){
+
         $('.item .nav a').show();
         $('.siteeditor > .contents > .item').first().find(".nav .up").hide();
         $('.siteeditor > .contents > .item').last().find(".nav .down").hide();
@@ -507,13 +543,15 @@ cms.w.siteeditor= {
           $(this).find('.nav a').show();
           $(this).find('.itm').first().find(".nav .up").hide();
           $(this).find('.itm').last().find(".nav .down").hide();
-        })
+        });
+
       }
 
       resetNav();
       refreshElmFunctions();
 
       function refreshElmFunctions(){
+
         $('.item > .nav .up, .itm > .nav .up').click(function(){
           var elm=$(this).parent().parent();
           setScrollTop();
@@ -538,19 +576,22 @@ cms.w.siteeditor= {
           cms.w.siteeditor.saveData(false);
           fixFuckingEditor();
         });
+
         $('.siteeditor > .contents > .item > .nav > .up, .siteeditor > .contents > .item > .nav > .down').click(function(){
             cms.w.siteeditor.scrollTo=$(this).parent().parent();
             $('html, body').animate({
                scrollTop: cms.w.siteeditor.scrollTo.offset().top
            }, 500)
         });
+
         $('.siteeditor > .contents > .item .itm .up, .siteeditor > .contents > .item .itm .down, .siteeditor > .contents > .item .itm .delete').click(function(){
             //cms.w.siteeditor.scrollTo=$(this).parent().parent().parent().parent();
             //console.log(cms.w.siteeditor.scrollTo);
             $('html, body').scrollTop(cms.w.siteeditor.scrollTo);
-
         });
+
       }
+
       $('.imageuploader').append(cms.c.btn("select image / add image","select_f"));
       $('.galleryuploader').append(cms.c.btn("select images / add images","select_f"));
       $('.downloadsuploader').append(cms.c.btn("select files / add files","select_f"));
@@ -569,6 +610,7 @@ cms.w.siteeditor= {
           resetNav();
         });
       });
+
       $('.galleryuploader .select_f').click(function(){
         $('.siteeditor').hide();
         var elm=$(this).parent().parent();
@@ -611,6 +653,7 @@ cms.w.siteeditor= {
 
 
       function fixFuckingEditor(){
+
         $(".siteeditor > .contents > .item.text").each(function(){
           $(this).css("min-height",$(this).height());
         })
@@ -637,7 +680,6 @@ cms.w.siteeditor= {
       }).change(function(){
         var elm=$(this).parent().parent();
         actVideo(elm);
-
       });
 
       $(".item.video").each(function(){
@@ -645,6 +687,7 @@ cms.w.siteeditor= {
       });
 
       function actVideo(elm){
+
         var id=getID(elm.find(".videourl").val());
         elm.find(".videoid").val(id);
         elm.find(".preview").html("<img src='https://img.youtube.com/vi/"+id+"/default.jpg'>")
@@ -655,17 +698,19 @@ cms.w.siteeditor= {
             return r[1];
           }
         }
+
       }
 
       $(".editor").each(function(){
         $(this).attr("id","editor"+dd);
         CKEDITOR.replace( 'editor'+dd,{filebrowserBrowseUrl: '/admin/filebrowser.php',filebrowserUploadUrl: '/admin/filebrowser.php'});
-
-        dd=dd+1;
+        dd+=1;
       });
 
     },
+
     saveData: function(toFile,tmp=false) {
+
         var o = {};
         //Dirty editor hack not working otherwise
         for(var instanceName in CKEDITOR.instances){
@@ -674,6 +719,7 @@ cms.w.siteeditor= {
         o.title = $(".fixsiteparts .title").val();
         o.id = $(".fixsiteparts .id").val();
         o.file = getUniqueFilename($(".fixsiteparts .file").val(),cms.w.site.data.sites);
+
         function getUniqueFilename(name,data){
           var at=0;
           name=name.split(".json").join("");
@@ -693,8 +739,10 @@ cms.w.siteeditor= {
           }
           return name+add;
         }
+
         o.menuid = $(".fixsiteparts .menuid").val();
         o.content = [];
+
         $("#content .contents .item").each(function() {
             switch ($(this).attr("data-type")) {
                 case "text":
@@ -761,55 +809,59 @@ cms.w.siteeditor= {
                     break;
             }
         });
+
         var deleteFile="";
+
         if(cms.w.siteeditor.isnew==false && cms.w.siteeditor.data.file!=o.file){
           deleteFile=cms.w.siteeditor.data.file;
         }
+
         cms.w.siteeditor.data=o;
+
         if(toFile && !tmp){
-        cms.c.pl.show();
-        $.post("api/savejson.php?file=" + o.file+"&delete="+deleteFile, {
-                data: JSON.stringify(o)
-            })
-            .done(function(data) {
-                $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
-                    var newsites = [];
-                    var found = false;
-                    for (var i = 0; i < data.sites.length; i++) {
-                        if (data.sites[i].id != o.id) {
-                            newsites.push(data.sites[i]);
-                        } else {
-                            found = true;
-                            newsites.push({
-                                title: o.title,
-                                id: o.id,
-                                menuid: o.menuid,
-                                visible: o.visible,
-                                file: o.file
-                            });
-                        }
-                    }
-                    //IF new site
-                    if (!found) {
-                        newsites.push({
-                            title: o.title,
-                            id: o.id,
-                            menuid: o.menuid,
-                            visible: o.visible,
-                            file: o.file
-                        });
-                    }
+          cms.c.pl.show();
+          $.post("api/savejson.php?file=" + o.file+"&delete="+deleteFile, {
+                  data: JSON.stringify(o)
+              })
+              .done(function(data) {
+                  $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
+                      var newsites = [];
+                      var found = false;
+                      for (var i = 0; i < data.sites.length; i++) {
+                          if (data.sites[i].id != o.id) {
+                              newsites.push(data.sites[i]);
+                          } else {
+                              found = true;
+                              newsites.push({
+                                  title: o.title,
+                                  id: o.id,
+                                  menuid: o.menuid,
+                                  visible: o.visible,
+                                  file: o.file
+                              });
+                          }
+                      }
+                      //IF new site
+                      if (!found) {
+                          newsites.push({
+                              title: o.title,
+                              id: o.id,
+                              menuid: o.menuid,
+                              visible: o.visible,
+                              file: o.file
+                          });
+                      }
 
-                    data.sites = newsites;
-                    $.post("api/savejson.php?file=__sitelist.json", {
-                            data: JSON.stringify(data)
-                        })
-                        .done(function(data) {
-                            cms.w.site.create();
-                        });
-                });
+                      data.sites = newsites;
+                      $.post("api/savejson.php?file=__sitelist.json", {
+                              data: JSON.stringify(data)
+                          })
+                          .done(function(data) {
+                              cms.w.site.create();
+                          });
+                  });
 
-            });
+              });
           }
     }
 
@@ -818,15 +870,19 @@ cms.w.siteeditor= {
 
 // Menulist
 cms.w.menu= {
+
     data: {},
 
     create: function() {
+
         cms.c.pl.show();
         cms.w.start.menu.mark("menu");
+
         $.getJSON(cms.c.ck("data/__sitelist.json"), function(data) {
             cms.w.menu.list(data);
             cms.w.menu.data = data;
         });
+
     },
 
     list: function(data) {
@@ -856,6 +912,7 @@ cms.w.menu= {
 
         $(".listitem").first().children('.up').hide();
         $(".listitem").last().children('.down').hide();
+
         $(".listitem .sub").each(function(){
           $(this).children('.listitem').first().children('.up').hide();
           $(this).children('.listitem').last().children('.down').hide();
@@ -865,9 +922,11 @@ cms.w.menu= {
         $(".newmenu").click(function() {
             cms.w.menueditor.create(data, "new");
         })
+
         $(".listitem .title").click(function() {
             cms.w.menueditor.create(data, $(this).parent().attr("data-id"));
         });
+
         $(".listitem .remove").click(function() {
           var r = confirm("Delete?");
           if (r == true) {
@@ -876,6 +935,7 @@ cms.w.menu= {
           }
 
         });
+
         $('.listitem .up').click(function(){
           var elm=$(this).parent();
           var elmat=elm.prev();
@@ -885,6 +945,7 @@ cms.w.menu= {
           elm.insertBefore(elmat);
           cms.w.menueditor.saveAsView();
         });
+
         $('.listitem .down').click(function(){
           var elm=$(this).parent();
           var elmat=elm.next();
@@ -894,6 +955,7 @@ cms.w.menu= {
           elm.insertAfter(elmat);
           cms.w.menueditor.saveAsView();
         });
+
         $(".listitem .addsub").click(function() {
             var elm = $(this).parent();
             cms.c.pl.show();
@@ -908,12 +970,15 @@ cms.w.menu= {
                 cms.w.menueditor.buildeditor(mo, elm.attr("data-id"));
             });
         });
+
     }
 }
 
 // Menueditor
 cms.w.menueditor= {
+
     create: function(data, id) {
+
         cms.c.pl.hide();
         var mo = {};
 
@@ -927,9 +992,11 @@ cms.w.menueditor= {
                 }
             }
         }
+
         searchMenuPoint(data.menu, function(data) {
             mo = data
         });
+
         if (mo.title == undefined) {
             cms.c.pl.show();
             $.getJSON(cms.c.ck("api/getid.php"), function(data) {
@@ -947,19 +1014,24 @@ cms.w.menueditor= {
         }
 
     },
+
     buildeditor: function(o, parent) {
+
         cms.c.pl.hide();
+
         var code = [];
         code.push("<div class='menueditor'>");
         code.push("<div class='row'><label>title</label><input class='title' value='" + o.title + "'></div>");
         code.push("<div class='row'><label>target</label>");
         code.push("<input type='hidden' class='id' value='" + o.id + "'>");
         code.push("<select class='target'>");
+
         var targets = [
             ["", "none"],
             ["_top", "_top"],
             ["_blank", "_blank"]
         ];
+
         for (var i = 0; i < targets.length; i++) {
             var selected = "";
             if (targets[i][0] == o.target) {
@@ -967,13 +1039,16 @@ cms.w.menueditor= {
             }
             code.push("<option value='" + targets[i][0] + "'" + selected + ">" + targets[i][1] + "</option>");
         }
+
         code.push("</select>")
         code.push("</div>");
         code.push("<div class='row'><label>linkurl</label><input class='action' value='" + o.action + "'></div>");
         code.push(cms.c.btn("save", "save"));
         code.push("</div>");
         $("#content").append(code.join(""));
+
         $('.menucontainer').hide();
+
         $(".save").click(function() {
             var elm = $(".menucontainer .listitem[data-id='" + $(".menueditor .id").val() + "']");
             if (elm.length > 0) {
