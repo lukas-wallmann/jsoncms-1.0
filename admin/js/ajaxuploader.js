@@ -38,7 +38,7 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
           return function(e) {
             // Render thumbnail.
             if (theFile.type=="image/jpeg") {
-              resize(e.target.result,[200,200],"thumps/"+theFile.name,callback);
+              resize(e.target.result,[400,400],"thumps/"+theFile.name,callback);
               resize(e.target.result,[1920,1080],theFile.name,callback);
             }else{
               callback(e.target.result,theFile.name)
