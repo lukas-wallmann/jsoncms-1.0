@@ -7,7 +7,7 @@
   $files=explode(",",$filestodelete);
   foreach ($files as $file) {
     if(checkDirAllowed("../uploads",$file)){
-      unlink("../".$file);
+      if(file_exists("../".$file))unlink("../".$file);
     }else{
       die("fuck you!");
     }

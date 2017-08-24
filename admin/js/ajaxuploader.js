@@ -38,7 +38,7 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
           return function(e) {
             // Render thumbnail.
             if (theFile.type=="image/jpeg") {
-              resize(e.target.result,[200,200],"thump_"+theFile.name,callback);
+              resize(e.target.result,[200,200],"thumps/"+theFile.name,callback);
               resize(e.target.result,[1920,1080],theFile.name,callback);
             }else{
               callback(e.target.result,theFile.name)
@@ -93,7 +93,7 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
       console.log(instance.files[instance.at][0]);
       $.post( 'api/uploadfile.php?dir='+instance.dir, { filename: instance.files[instance.at][0], data:instance.files[instance.at][1]  } ).done(function(){
         instance.at++;
-        alert("done");
+        $(".ajaxUploader_"+instance.uploaderID+" .preloader .bar").width((instance.at/instance.files.length*100)+"%");
         if(instance.at<instance.files.length){
           upload();
         }else{
