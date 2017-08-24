@@ -5,6 +5,7 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
 
     var instance=this;
     instance.files=[];
+    instance.at=0;
     instance.done=done;
     instance.error=error;
     instance.uploaderID=ajaxUploaderInstace;
@@ -21,9 +22,11 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
       code.push('</form>');
       instance.html(code.join(""));
       $(".ajaxUploader_"+instance.uploaderID+" input[type=file]").on('change', prepareUpload);
-      $(".ajaxUploader_"+instance.uploaderID).on('submit', uploadFiles);
+      $(".ajaxUploader_"+instance.uploaderID).on('submit', startupload);
     }
     function prepareUpload (evt){
+      instance.at=0;
+      instance.files=[];
       var files = evt.target.files; // FileList object
 
       // Loop through the FileList and render image files as thumbnails.
@@ -80,53 +83,24 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
       image.info=info;
       image.name=name;
     }
-    function uploadFiles(event){
+    function startupload(event){
           event.stopPropagation();
           event.preventDefault();
+          upload();
+    }
 
-          var data = new FormData();
-          $.each(instance.files, function(key, value){
-              data.append(key, value);
-          });
-
-          $.ajax({
-          	xhr: function() {
-              var xhr = new window.XMLHttpRequest();
-              xhr.upload.addEventListener("progress", function(evt){
-                if (evt.lengthComputable) {
-                  var percentComplete = Math.round(evt.loaded / evt.total*100);
-                  $(".ajaxUploader_"+instance.uploaderID+" .preloader .bar").width(percentComplete+"%");
-                } }, false);
-              xhr.addEventListener("progress", function(evt){
-                if (evt.lengthComputable) {
-                  var percentComplete = evt.loaded / evt.total * 100;
-                  $(".ajaxUploader_"+instance.uploaderID+" .preloader .bar").width(percentComplete+"%");
-                }
-              }, false);
-               return xhr;
-          },
-              url: 'api/uploadfile.php?dir='+instance.dir+'&files',
-              type: 'POST',
-              data: data,
-              cache: false,
-              dataType: 'json',
-              processData: false, // Don't process the files
-              contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-              success: function(data, textStatus, jqXHR){
-                  if(typeof data.error === 'undefined'){
-                    instance.done(data);
-                  }else{
-                      // Handle errors here
-                    instance.error(data.error);
-                  }
-              },
-              error: function(jqXHR, textStatus, errorThrown){
-                  instance.error( textStatus);
-              }
-          });
-      }
-
-
+    function upload(){
+      console.log(instance.files[instance.at][0]);
+      $.post( 'api/uploadfile.php?dir='+instance.dir, { filename: instance.files[instance.at][0], data:instance.files[instance.at][1]  } ).done(function(){
+        instance.at++;
+        alert("done");
+        if(instance.at<instance.files.length){
+          upload();
+        }else{
+          instance.done();
+        }
+      });
+    }
 
     build();
     return this;
