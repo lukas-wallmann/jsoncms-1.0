@@ -6,10 +6,15 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
     var instance=this;
     instance.files=[];
     instance.at=0;
+    instance.fat=0;
+    instance.wat=0;
+    instance.wait=0;
+    instance.cat=0;
     instance.done=done;
     instance.error=error;
     instance.uploaderID=ajaxUploaderInstace;
     instance.dir=dir;
+    instance.cache=[];
 
     function build(){
       var code=[];
@@ -24,35 +29,14 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
       $(".ajaxUploader_"+instance.uploaderID+" input[type=file]").on('change', prepareUpload);
       $(".ajaxUploader_"+instance.uploaderID).on('submit', startupload);
     }
+
     function prepareUpload (evt){
       instance.at=0;
-      instance.files=[];
-      var files = evt.target.files; // FileList object
-
-      // Loop through the FileList and render image files as thumbnails.
-      for (var i = 0, f; f = files[i]; i++) {
-
-        var reader = new FileReader();
-
-        reader.onload = (function(theFile) {
-          return function(e) {
-            // Render thumbnail.
-            if (theFile.type=="image/jpeg") {
-              resize(e.target.result,[200,200],"thumps/"+theFile.name,callback);
-              resize(e.target.result,[500,500],"thumps/gallery_"+theFile.name,callback);
-              resize(e.target.result,[1920,1080],theFile.name,callback);
-            }else{
-              callback(e.target.result,theFile.name)
-            }
-          };
-        })(f);
-
-        reader.readAsDataURL(f);
-      }
+      instance.fat=0;
+      instance.wat=0;
+      instance.files=evt.target.files;
     }
-    function callback(data,filename){
-      instance.files.push([filename,data]);
-    }
+
     function resize(url,info=[1920,1080],name="file.jpg",callback=function(){},q=0.8){
       var image = new Image();
       image.onload = function (imageEvent) {
@@ -84,21 +68,61 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
       image.info=info;
       image.name=name;
     }
+
     function startupload(event){
           event.stopPropagation();
           event.preventDefault();
-          upload();
+          run();
+    }
+    function run(){
+      console.log("run");
+      instance.cache=[];
+      instance.wat=0;
+      var reader = new FileReader();
+
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          if (theFile.type=="image/jpeg") {
+            instance.wait=3;
+            resize(e.target.result,[200,200],"thumps/"+theFile.name,callback);
+            resize(e.target.result,[500,500],"thumps/gallery_"+theFile.name,callback);
+            resize(e.target.result,[1920,1080],theFile.name,callback);
+          }else{
+            instance.wait=1;
+            callback(e.target.result,theFile.name)
+          }
+        };
+      })(instance.files[instance.at]);
+
+      reader.readAsDataURL(instance.files[instance.at]);
+
     }
 
-    function upload(){
-      console.log(instance.files[instance.at][0]);
-      $.post( 'api/uploadfile.php?dir='+instance.dir, { filename: instance.files[instance.at][0], data:instance.files[instance.at][1]  } ).done(function(){
-        instance.at++;
+    function callback(data,filename){
+      instance.cache.push([filename,data]);
+      instance.wat++;
+      if(instance.wat==instance.wait){
+        instance.wat=0;
+        upload();
+      }
+    }
+
+    function upload(data,filename){
+      console.log(instance.cache[instance.cat][0]);
+      $.post( 'api/uploadfile.php?dir='+instance.dir, { filename: instance.cache[instance.cat][0], data:instance.cache[instance.cat][1]  } ).done(function(){
+        instance.cat++;
         $(".ajaxUploader_"+instance.uploaderID+" .preloader .bar").width((instance.at/instance.files.length*100)+"%");
-        if(instance.at<instance.files.length){
+        if(instance.cat<instance.cache.length){
           upload();
         }else{
-          instance.done();
+          instance.at++;
+          instance.cat=0;
+          if(instance.at<instance.files.length){
+            run();
+          }else{
+            instance.done();
+          }
         }
       });
     }
