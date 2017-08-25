@@ -75,7 +75,6 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
           run();
     }
     function run(){
-      console.log("run");
       instance.cache=[];
       instance.wat=0;
       var reader = new FileReader();
@@ -109,10 +108,9 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
     }
 
     function upload(data,filename){
-      console.log(instance.cache[instance.cat][0]);
       $.post( 'api/uploadfile.php?dir='+instance.dir, { filename: instance.cache[instance.cat][0], data:instance.cache[instance.cat][1]  } ).done(function(){
         instance.cat++;
-        $(".ajaxUploader_"+instance.uploaderID+" .preloader .bar").width((instance.at/instance.files.length*100)+"%");
+        $(".ajaxUploader_"+instance.uploaderID+" .preloader .bar").width(((instance.at+(instance.cat/instance.cache.length))/instance.files.length*100)+"%");
         if(instance.cat<instance.cache.length){
           upload();
         }else{
