@@ -1217,7 +1217,7 @@ cms.w.files= {
           data.files[i]=parts[parts.length-1];
           var style="";
           if(type=="image"){
-            style='style="background:url('+cms.w.files.dir+"thumps/"+data.files[i]+')"';
+            style='style="background:url(\''+cms.w.files.dir+"thumps/"+data.files[i]+'\')"';
           }
           $('#content > .filemanager > .files').append('<div class="file '+type+'" '+style+' data-path="'+cms.w.files.dir+data.files[i]+'"><div class="title">'+data.files[i]+'</div></div>')
         }
@@ -1242,7 +1242,7 @@ cms.w.files= {
 
         var parts=file.split(".");
         var ext=parts[parts.length-1];
-        
+
         if(ext=="" || parts.length==1){
           return "folder";
         }else{
