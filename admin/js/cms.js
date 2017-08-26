@@ -84,7 +84,7 @@ var cms={
         menu: {
             create: function() {
                 var code = [];
-                var points = ["site", "menu", "files"];
+                var points = ["site", "menu", "files", "settings"];
                 for (var i = 0; i < points.length; i++) {
                     code.push("<a class='" + points[i] + "'>" + points[i] + "</a>");
                 }
@@ -1268,4 +1268,44 @@ cms.w.files= {
 
     }
 
+}
+
+cms.w.settings={
+  create:function(){
+
+    var code=[];
+    code.push("<h1>image formats</h1>");
+    code.push("<h3>gallery thumps</h3>");
+    code.push(formatselect("galleryformat"));
+    code.push("<div id='gallerysize'><input class='width'><input class='height'></div>");
+    code.push("<h3>big</h3>");
+    code.push(formatselect("bigformat"));
+    code.push("<div id='bigsize'><input class='width'><input class='height'></div>");
+    code.push(cms.c.btn("save","save"));
+    $("#content").html(code.join(""));
+
+    function formatselect(name){
+      var c=[];
+      c.push("<select id='"+name+"'>");
+      c.push("<option value='fitin'>fitin</option>");
+      c.push("<option value='crop'>crop</option>");
+      c.push("</select>");
+      return c.join("");
+    }
+
+    $("#content .save").click(function(){
+      var o={};
+      o.imageformats={};
+      o.imageformats.gallery=[$("#galleryformat").val(),$("#gallerysize .width").val(),$("#gallerysize .height").val()];
+      o.imageformats.big=[$("#bigformat").val(),$("#bigsize .width").val(),$("#bigsize .height").val()];
+      cms.c.pl.show();
+      $.post("api/savejson.php?file=__settings.json", {
+              data: JSON.stringify(o)
+          })
+          .done(function(data) {
+              cms.w.settings.create();
+          });
+    })
+
+  }
 }
