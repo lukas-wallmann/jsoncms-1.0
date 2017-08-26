@@ -20,11 +20,7 @@
     $files=explode(",",$delete);
     foreach ($files as $file) {
       if($file!=""){
-          if(checkDirAllowed("../data",$file)){
             unlink("../data/".$file);
-          }else{
-            die("fuck you!");
-          }
       }
     }
   }
