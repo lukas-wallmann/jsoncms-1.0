@@ -14,6 +14,19 @@ body {
 ol, ul {
     list-style: outside none none;
 }
+
+h1 {
+  font-size: 25px;
+  margin: 0 0px 16px 0;
+}
+h3 {
+  font-size: 20px;
+  margin: 0 0 10px 0;
+}
+.width, .height {
+  width: 40px;
+  margin: 0 0 20px 0;
+}
 blockquote, q {
     quotes: none;
 }
