@@ -1272,23 +1272,39 @@ cms.w.files= {
 
 cms.w.settings={
   create:function(){
+    
+    cms.w.start.menu.mark("settings");
 
+    $.getJSON(cms.c.ck("data/__settings.json"), function(data) {
+        cms.w.settings.build(data);
+    });
+
+  },
+  build:function(data){
+
+    cms.c.pl.hide();
     var code=[];
+
     code.push("<h1>image formats</h1>");
     code.push("<h3>gallery thumps</h3>");
-    code.push(formatselect("galleryformat"));
-    code.push("<div id='gallerysize'><input class='width'><input class='height'></div>");
+    code.push(formatselect("galleryformat",data.imageformats.gallery[0]));
+    code.push("<div id='gallerysize'><input class='width' value='"+data.imageformats.gallery[1]+"'><input class='height' value='"+data.imageformats.gallery[2]+"'></div>");
     code.push("<h3>big</h3>");
-    code.push(formatselect("bigformat"));
-    code.push("<div id='bigsize'><input class='width'><input class='height'></div>");
+    code.push(formatselect("bigformat",data.imageformats.big[0]));
+    code.push("<div id='bigsize'><input class='width' value='"+data.imageformats.big[1]+"'><input class='height' value='"+data.imageformats.big[2]+"'></div>");
     code.push(cms.c.btn("save","save"));
+
     $("#content").html(code.join(""));
 
-    function formatselect(name){
+    function formatselect(name,selected){
       var c=[];
       c.push("<select id='"+name+"'>");
-      c.push("<option value='fitin'>fitin</option>");
-      c.push("<option value='crop'>crop</option>");
+      c.push("<option value='fitin'");
+      if(selected=="fitin")c.push(" selected");
+      c.push(">fitin</option>");
+      c.push("<option value='crop'");
+      if(selected=="crop")c.push(" selected");
+      c.push(">crop</option>");
       c.push("</select>");
       return c.join("");
     }
