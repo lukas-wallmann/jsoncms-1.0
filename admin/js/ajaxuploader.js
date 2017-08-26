@@ -1,5 +1,5 @@
 var ajaxUploaderInstace=0;
-$.fn.ajaxUploader = function(multiple,done,error,dir) {
+$.fn.ajaxUploader = function(multiple,done,dir,formats) {
 
     ajaxUploaderInstace++;
 
@@ -11,9 +11,9 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
     instance.wait=0;
     instance.cat=0;
     instance.done=done;
-    instance.error=error;
     instance.uploaderID=ajaxUploaderInstace;
     instance.dir=dir;
+    instance.formats=formats;
     instance.cache=[];
 
     function build(){
@@ -37,7 +37,7 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
       instance.files=evt.target.files;
     }
 
-    function resize(url,info=[1920,1080],name="file.jpg",callback=function(){},q=0.8){
+    function resize(url,info=["fitin",1920,1080],name="file.jpg",callback=function(){},q=0.8){
       var image = new Image();
       image.onload = function (imageEvent) {
 
@@ -45,21 +45,39 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
           var canvas = document.createElement('canvas'),
               width = image.width,
               height = image.height,
-              widthto=image.info[0],
-              heigthto=image.info[1],
+              mode=image.info[0],
+              widthto=image.info[1],
+              heigthto=image.info[2],
+              x=0,
+              y=0,
               relw = widthto/width,
               relh = heigthto/height;
 
-          if (relh > relw) {
-              relto=relw;
-          } else {
-              relto=relh;
+          if(mode=="fitin"){
+            if (relh > relw) {
+                relto=relw;
+            } else {
+                relto=relh;
+            }
+          }else{
+            if (relh < relw) {
+                relto=relw;
+            } else {
+                relto=relh;
+            }
           }
           width*=relto;
           height*=relto;
-          canvas.width = width;
-          canvas.height = height;
-          canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+          x=(widthto-width)/2;
+          y=(heigthto-height)/2;
+          if(mode=="fitin"){
+            canvas.width = width;
+            canvas.height = height;
+          }else{
+            canvas.width = widthto;
+            canvas.height = heigthto;
+          }
+          canvas.getContext('2d').drawImage(image, x, y, width, height);
           var dataUrl = canvas.toDataURL('image/jpeg',q);
           callback(dataUrl,image.name);
       }
@@ -84,9 +102,9 @@ $.fn.ajaxUploader = function(multiple,done,error,dir) {
           // Render thumbnail.
           if (theFile.type=="image/jpeg") {
             instance.wait=3;
-            resize(e.target.result,[200,200],"thumps/"+theFile.name,callback);
-            resize(e.target.result,[500,500],"thumps/gallery_"+theFile.name,callback);
-            resize(e.target.result,[1920,1080],theFile.name,callback);
+            resize(e.target.result,["crop",200,200],"thumps/"+theFile.name,callback);
+            resize(e.target.result,instance.formats.gallery,"thumps/gallery_"+theFile.name,callback);
+            resize(e.target.result,instance.formats.big,theFile.name,callback);
           }else{
             instance.wait=1;
             callback(e.target.result,theFile.name)

@@ -1132,8 +1132,9 @@ cms.w.files= {
 
       cms.w.files.addFolderNav();
 
-      $('.uploader').ajaxUploader(true,function(){cms.w.files.create(cms.w.files.dir,cms.w.files.selectmode,cms.w.files.handle)},function(data){alert("upload error:"+data)},cms.w.files.dir);
-
+      $.getJSON(cms.c.ck("data/__settings.json"), function(data) {
+          $('.uploader').ajaxUploader(true,function(){cms.w.files.create(cms.w.files.dir,cms.w.files.selectmode,cms.w.files.handle)},cms.w.files.dir,data.imageformats);
+      });
       cms.c.pl.show();
 
       $.getJSON(cms.c.ck("api/getdirlist.php?dir="+cms.w.files.dir), function(data) {
@@ -1165,8 +1166,8 @@ cms.w.files= {
             for(var i=0; i<parts.length-1; i++){
               thumppath+=parts[i];
             }
-            thumppath+="/thumps/"+parts[parts.length-1];
             var gallerythumppath=thumppath+"/thumps/gallery_"+parts[parts.length-1];
+            thumppath+="/thumps/"+parts[parts.length-1];
             thumps.push(thumppath);
             thumps.push(gallerythumppath);
           }
@@ -1272,7 +1273,7 @@ cms.w.files= {
 
 cms.w.settings={
   create:function(){
-    
+
     cms.w.start.menu.mark("settings");
 
     $.getJSON(cms.c.ck("data/__settings.json"), function(data) {
