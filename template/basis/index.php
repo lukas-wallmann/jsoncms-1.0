@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
   include "getData.php";
   include "menu.php";
   include "site.php";
@@ -23,12 +21,19 @@ ini_set('display_errors', 1);
   </head>
 
   <body>
-    <nav><div class='menutoggle'>menu</div><?php echo getMenu("MAIN_MENU","mainMenuHandle") ?></nav>
+    <nav>
+      <div class='menutoggle'>menu</div>
+      <?php echo getMenu("MAIN_MENU","mainMenuHandle") ?>
+    </nav>
     <main>
       <h1><?php echo getTitle() ?></h1>
       <?php echo getContents() ?>
     </main>
-    <footer><nav><?php echo getMenu("META_MENU","mainMenuHandle") ?></nav></footer>
+    <footer>
+      <nav>
+        <?php echo getMenu("META_MENU","mainMenuHandle") ?>
+      </nav>
+    </footer>
   </body>
 
 </html>

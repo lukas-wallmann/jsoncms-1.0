@@ -13,10 +13,6 @@ $fo = fopen($filename,"r");
 $__sitelist = json_decode(fread($fo, filesize($filename)));
 
 
-
-
-
-
 foreach($__sitelist->sites as $site){
   $link=$baseurlws."/".str_replace(".json","",$site->file)."/";
   $secure_connection=false;
