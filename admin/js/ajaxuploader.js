@@ -68,12 +68,13 @@ $.fn.ajaxUploader = function(multiple,done,dir,formats) {
           }
           width*=relto;
           height*=relto;
-          x=(widthto-width)/2;
-          y=(heigthto-height)/2;
+
           if(mode=="fitin"){
             canvas.width = width;
             canvas.height = height;
           }else{
+            x=(widthto-width)/2;
+            y=(heigthto-height)/2;
             canvas.width = widthto;
             canvas.height = heigthto;
           }
