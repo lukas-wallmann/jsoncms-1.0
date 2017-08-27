@@ -1115,7 +1115,11 @@ cms.w.files= {
 
       var code=[];
       code.push('<div class="filemanager">');
-        code.push('<div class="nav"><div class="folder"></div><h2>Create new Folder</h2><input class="foldername" placeholder="name of new folder"></input>'+cms.c.btn(" create new folder","newfolder")+"<br>"+cms.c.btn("delete","delete")+'</div>');
+        code.push('<div class="nav"><div class="folder"></div>');
+        code.push('<h2>Create new Folder</h2>');
+        code.push('<input class="foldername" placeholder="name of new folder">');
+        code.push(cms.c.btn(" create new folder","newfolder");
+        code.push("<br>"+cms.c.btn("delete","delete")+'</div>');
         code.push("<h2>upload new files</h2>");
         code.push('<div class="uploader"></div>');
         if(selectmode!="no"){

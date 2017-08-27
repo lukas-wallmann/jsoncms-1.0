@@ -42,7 +42,8 @@ body {
 }
 #main {
     background: #fff none repeat scroll 0 0;
-    margin: 10px;
+    margin: 10px auto;
+    max-width: 875px;
     overflow: hidden;
 }
 #main nav {
