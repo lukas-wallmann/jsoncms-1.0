@@ -38,7 +38,7 @@ table {
     border-spacing: 0;
 }
 body {
-    background: #323232 none repeat scroll 0 0;
+    background: #161E21;
 }
 #main {
     background: #fff none repeat scroll 0 0;
@@ -47,11 +47,11 @@ body {
     overflow: hidden;
 }
 #main nav {
-    background: #43e01f none repeat scroll 0 0;
+    background: #161E21;
 }
 #main nav a {
-    background: #f24eff none repeat scroll 0 0;
-    border-right: 5px solid #323232;
+    background: #B21428;
+    border-right: 5px solid #0A1215;
     color: #fff;
     display: inline-block;
     font-family: sans-serif;
@@ -70,7 +70,7 @@ body {
     padding: 30px 0 23px;
 }
 #main #content .menuselect {
-    background: #49ffff none no-repeat scroll 87px center;
+    background: #1290CC;
     border: medium none;
     margin: 10px 0;
     padding: 9px;
@@ -136,7 +136,7 @@ body {
     width: 100%;
 }
 .footer {
-    background: #000 none repeat scroll 0 0;
+    background: #B21428;
     color: #fff;
     font-size: 11px;
     padding: 10px;
@@ -231,11 +231,11 @@ form .preloader .bar {
     width: 100%;
 }
 button {
-    background: #e31912 none repeat scroll 0 0;
+    background: #FF304A;
     border: medium none;
     color: #fff;
     font-weight: bold;
-    padding: 10px;
+    padding: 15px;
 }
 .siteeditor > .fixsiteparts .row label {
     display: inline-block;
@@ -304,9 +304,9 @@ h2 {
     display: none;
 }
 #main #content > .menucontainer > .listitem > .title {
-    background: #3ce7e9 none repeat scroll 0 0;
+    background: #1290CC;
     border-right: 5px solid #f2f2f2;
-    color: #454545;
+    color: #fff;
     display: inline-block;
     font-family: sans-serif;
     padding: 4px;
@@ -353,7 +353,7 @@ option:nth-child(2n) {
     float: left;
 }
 .filemanager > .nav .folder > a {
-    background: #3ce7e9 none repeat scroll 0 0;
+    background: #1290CC;
     cursor: pointer;
     display: inline-block;
     font-size: 17px;
@@ -475,4 +475,18 @@ button.select_f {
     height: 500px;
     padding: 10px 5px;
     width: 100%;
+}
+
+.foldername {
+  padding: 13px 3px;
+  width: 131px;
+}
+input, select {
+  padding: 5px;
+  background: #d4d4d4;
+  margin: 0 0 10px 0;
+}
+label {
+  width: 100px;
+  display: inline-block;
 }
