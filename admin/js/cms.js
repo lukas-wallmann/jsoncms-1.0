@@ -1118,7 +1118,7 @@ cms.w.files= {
         code.push('<div class="nav"><div class="folder"></div>');
         code.push('<h2>Create new Folder</h2>');
         code.push('<input class="foldername" placeholder="name of new folder">');
-        code.push(cms.c.btn(" create new folder","newfolder");
+        code.push(cms.c.btn(" create new folder","newfolder"));
         code.push("<br>"+cms.c.btn("delete","delete")+'</div>');
         code.push("<h2>upload new files</h2>");
         code.push('<div class="uploader"></div>');
@@ -1152,6 +1152,7 @@ cms.w.files= {
         });
         handle(files);
       });
+
       $('.filemanager .newfolder').click(function(){
         var newdir=cms.w.files.dir+$(".filemanager .foldername").val()+"/";
         cms.c.pl.show();
@@ -1159,6 +1160,7 @@ cms.w.files= {
             cms.w.files.create(newdir,cms.w.files.selectmode,cms.w.files.handle);
         });
       });
+
       $(".filemanager .delete").click(function(){
 
         var toDelete=[];
