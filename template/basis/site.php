@@ -7,7 +7,7 @@
 
   //Gives the contents
   function getContents(){
-
+    global $baseurl;
     $code="";
 
     foreach ($GLOBALS["__contents"]->content as $element){
@@ -25,18 +25,18 @@
               $code.="<pre class='item code'><code class='language-php'>".str_replace($search,$replace,$element->content)."</code></pre>";
               break;
           case "image":
-              $code.="<figure class='item image'><img src='/admin/".$element->content->image."' alt='".$element->content->description."'><figcaption>".$element->content->description."</figcaption></figure>";
+              $code.="<figure class='item image'><img src='$baseurl/admin/".$element->content->image."' alt='".$element->content->description."'><figcaption>".$element->content->description."</figcaption></figure>";
               break;
           case "text_image":
               $img="/admin/".$element->content->image;
-              $code.="<div class='item text_image ".$element->content->align."'><div>".$element->content->text."</div><a href='".$img."'><img src='".$img."'></a></div>";
+              $code.="<div class='item text_image ".$element->content->align."'><div>".$element->content->text."</div><a href='".$baseurl.$img."'><img src='".$baseurl.$img."'></a></div>";
               break;
           case "gallery":
               $code.="<div class='item gallery'>";
               foreach ($element->content as $img) {
                 $url="/admin/".$img->src;
                 $link="/admin/".$img->srcbig;
-                $code.="<a href='".$link."'><img src='".$url."'><span>".$img->description."</span></a>";
+                $code.="<a href='".$baseurl.$link."'><img src='".$baseurl.$url."'><span>".$img->description."</span></a>";
               }
               $code.="</div>";
               break;
