@@ -3,13 +3,14 @@ body {
     color: #474747;
     font-family: sans-serif;
     margin: 0;
+    background: #161E21;
 }
 a {
-    color: #43e01f;
+    color: #FF304A;
     text-decoration: none;
 }
 h1 {
-    color: #f24eff;
+    color: #1290CC;
     font-size: 30px;
     font-weight: normal;
 }
@@ -18,7 +19,7 @@ nav,main,footer{
   margin: 0 auto;
 }
 body > nav {
-    background: #43e01f none repeat scroll 0 0;
+    background: #B21428;
     margin: 0 auto;
 }
 body > nav::after {
@@ -34,7 +35,7 @@ body > nav ul {
     position: relative;
 }
 body > nav ul a {
-    color: #333;
+    color: #fff;
     display: block;
     font-size: 15px;
     font-weight: normal;
@@ -52,10 +53,10 @@ body > nav ul li.current-menu-item {
     background: #ddd none repeat scroll 0 0;
 }
 body > nav ul li:hover {
-    background: #f24eff none repeat scroll 0 0;
+    background: #1290CC none repeat scroll 0 0;
 }
 body > nav ul ul {
-    background: #43e01f none repeat scroll 0 0;
+    background: #B21428;
     display: none;
     left: 0;
     padding: 0;
@@ -79,6 +80,8 @@ body > nav ul li:hover > ul {
 }
 main {
     padding: 20px;
+    box-sizing: border-box;
+    background: #fff;
 }
 .item {
     margin: 20px 0;
@@ -90,17 +93,24 @@ main {
 }
 .item.text_image > div {
     display: inline-block;
+    width: 60%;
 }
 .item.text_image > a {
     float: left;
-    margin: 0 10px 0 0;
+    width: 40%;
+    padding: 0 20px 0 0;
+    box-sizing: border-box;
 }
 .item.text_image.right > a {
     float: right;
+    padding:0 0 0 20px;
+}
+.item.text_image > a img{
+  width:100%;
 }
 .item.video {
     box-sizing: border-box;
-    padding: 25px 0 56.25%;
+    padding: 0 0 56.25%;
     position: relative;
 }
 .item.video iframe {
@@ -138,12 +148,12 @@ main {
     padding: 20px;
 }
 .item.downloads a {
-    background: rgba(0, 0, 0, 0) url("/template/basis/img/download.png") no-repeat scroll left center;
+    background: rgba(0, 0, 0, 0) url("../img/download.png") no-repeat scroll left center;
     display: block;
     padding: 8px 0 8px 30px;
 }
 footer {
-    background: #414141 none repeat scroll 0 0;
+    background: #06070A;
 }
 footer > nav > ul {
     list-style: outside none none;
@@ -172,7 +182,7 @@ body > nav > .menutoggle{
     width:auto;
   }
   body > nav > .menutoggle {
-      background: url("/template/basis/img/menu-button.png") no-repeat scroll 0 0;
+      background: url("../img/menu-button.png") no-repeat scroll 0 0;
       display: block;
       margin: 0 0 15px 20px;
       padding: 5px 40px;
