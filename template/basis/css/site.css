@@ -175,17 +175,16 @@ body > nav > .menutoggle{
   }
   body > nav > ul{
     display:none;
-    background:#43e01f;
+    background:#B21428;
     width:100%;
   }
   body > nav ul ul li{
     width:auto;
   }
   body > nav > .menutoggle {
-      background: url("../img/menu-button.png") no-repeat scroll 0 0;
+      background: url("../img/menu-button.png") #fff no-repeat 10px 10px;
       display: block;
-      margin: 0 0 15px 20px;
-      padding: 5px 40px;
+      padding: 16px 51px;
   }
   body > nav ul li{
     float:none;
