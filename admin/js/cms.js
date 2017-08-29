@@ -296,6 +296,9 @@ cms.w.siteeditor= {
         cms.w.siteeditor.saveData(false,true);
         cms.w.siteeditor.newelement($(this));
       });
+      $(".save").click(function() {
+          cms.w.siteeditor.saveData(true);
+      });
     },
 
     getdata: function(id, isnew, file) {
@@ -376,9 +379,7 @@ cms.w.siteeditor= {
                 $("#content .fixsiteparts .file").val(cms.c.gFFT($(this).val()));
             });
 
-            $(".save").click(function() {
-                cms.w.siteeditor.saveData(true);
-            });
+
 
 
 
