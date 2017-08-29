@@ -1,4 +1,5 @@
 https://ocb.earth for demo, https://ocb.earth/admin (admin password)
+video:https://www.youtube.com/watch?v=0hZzhekSMbs
 
 1. go to /install.php
 
