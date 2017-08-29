@@ -1,3 +1,5 @@
+https://ocb.earth for demo, https://ocb.earth/admin (admin password)
+
 1. go to /install.php
 
 2. write a username and password and click to generate config
