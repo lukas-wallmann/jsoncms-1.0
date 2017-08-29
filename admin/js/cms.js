@@ -35,8 +35,8 @@ var cms={
 
 
     //button
-    btn: function(name, cl) {
-        return "<button class='" + cl + "'>" + name + "</button>";
+    btn: function(name, cl, ad="") {
+        return "<button class='" + cl + "' "+ad+">" + name + "</button>";
     },
 
 
@@ -287,6 +287,16 @@ cms.w.siteeditor= {
 
         }
     },
+    aktItmNav:function(){
+      $("#content .contents .item .subnav").remove();
+      $("#content .contents .item").each(function(i){
+        $(this).append("<div class='subnav'>"+cms.c.btn("new element","newelement","data-at='"+i+"'")+cms.c.btn("save","save")+"</div>");
+      });
+      $(".newelement").click(function(){
+        cms.w.siteeditor.saveData(false,true);
+        cms.w.siteeditor.newelement($(this));
+      });
+    },
 
     getdata: function(id, isnew, file) {
 
@@ -349,11 +359,10 @@ cms.w.siteeditor= {
             code.push("</select></div>");
             code.push("<input type='hidden' class='id' value='" + data.id + "'>");
             code.push("<input type='hidden' class='file' value='" + data.file + "'>");
-            code.push(cms.c.btn("new element","newelement"))
+            code.push("<div class='subnav'>"+cms.c.btn("new element","newelement","data-at='-1'")+cms.c.btn("save","save")+"</div>");
             code.push("</div>");
             code.push("<div class='contents'>");
             code.push("</div>");
-            code.push(cms.c.btn("save", "save"));
             code.push("</div>");
             $("#content").html(code.join(""));
 
@@ -371,18 +380,16 @@ cms.w.siteeditor= {
                 cms.w.siteeditor.saveData(true);
             });
 
-            $(".newelement").click(function(){
-              cms.w.siteeditor.saveData(false,true);
-              cms.w.siteeditor.newelement();
-            });
+
 
         });
 
     },
 
-    newelement:function(){
+    newelement:function(elm){
       //$(".siteeditor").hide();
-
+      var at=elm.attr("data-at");
+      cms.w.siteeditor.scrollTo=elm.offset().top;
       var code=[];
       code.push("<div class='newelement'>");
         code.push("<a class='text'>text</a>");
@@ -398,55 +405,60 @@ cms.w.siteeditor= {
 
       $("#content").html(code.join(""));
 
-      $(".newelement a").click(function(){
-        cms.w.siteeditor.scrollTo="last";
-      });
-
       $(".newelement .text").click(function(){
-        cms.w.siteeditor.data.content.push({type: "text",content: "This is a text"})
+        insertat(at,{type: "text",content: "This is a text"})
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
       $(".newelement .code").click(function(){
-        cms.w.siteeditor.data.content.push({type: "code",content: "This is code"})
+        insertat(at,{type: "code",content: "This is code"})
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
       $(".newelement .text_image").click(function(){
-        cms.w.siteeditor.data.content.push({type: "text_image",content: {image:"",text:"this is text",align:"left"}});
+        insertat(at,{type: "text_image",content: {image:"",text:"this is text",align:"left"}});
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
       $(".newelement .image").click(function(){
-        cms.w.siteeditor.data.content.push({type: "image",content: {image:"",description:"description text here"}});
+        insertat(at,{type: "image",content: {image:"",description:"description text here"}});
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
       $(".newelement .video").click(function(){
-        cms.w.siteeditor.data.content.push({type: "video",content:"www.youtube.com"});
+        insertat(at,{type: "video",content:"www.youtube.com"});
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
       $(".newelement .html").click(function(){
-        cms.w.siteeditor.data.content.push({type: "html",content:"html here"});
+        insertat(at,{type: "html",content:"html here"});
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
       $(".newelement .headline").click(function(){
-        cms.w.siteeditor.data.content.push({type: "headline",content:{type:2,content:"new headline"}});
+        insertat(at,{type: "headline",content:{type:2,content:"new headline"}});
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
       $(".newelement .gallery").click(function(){
-        cms.w.siteeditor.data.content.push({type: "gallery", content:[]});
+        insertat(at,{type: "gallery", content:[]});
         cms.w.siteeditor.build(cms.w.siteeditor.data);
       });
 
       $(".newelement .downloads").click(function(){
-        cms.w.siteeditor.data.content.push({type: "downloads", content:[]});
+        insertat(at,{type: "downloads", content:[]});
         cms.w.siteeditor.build(cms.w.siteeditor.data);
       });
 
+      function insertat(at,elm){
+        var tmp=[];
+        if(at==-1)tmp.push(elm);
+        for(var i=0;i<cms.w.siteeditor.data.content.length;i++){
+          tmp.push(cms.w.siteeditor.data.content[i]);
+          if(at==i)tmp.push(elm);
+        }
+        cms.w.siteeditor.data.content=tmp;
+      }
 
     },
 
@@ -515,6 +527,7 @@ cms.w.siteeditor= {
         }
 
         $("#content .contents").append(code.join(""));
+        cms.w.siteeditor.aktItmNav();
 
         if(cms.w.siteeditor.scrollTo=="last"){
 
@@ -524,18 +537,17 @@ cms.w.siteeditor= {
 
         }else{
 
-          if(cms.w.siteeditor.scrollTo.length>0){
             $('html, body').animate({
-              scrollTop: $(cms.w.siteeditor.scrollTo).offset().top
+              scrollTop: cms.w.siteeditor.scrollTo
             }, 500);
-          }
+
 
         }
 
       var dd=1;
 
       function resetNav(){
-
+        cms.w.siteeditor.aktItmNav();
         $('.item .nav a').show();
         $('.siteeditor > .contents > .item').first().find(".nav .up").hide();
         $('.siteeditor > .contents > .item').last().find(".nav .down").hide();
@@ -578,15 +590,13 @@ cms.w.siteeditor= {
         });
 
         $('.siteeditor > .contents > .item > .nav > .up, .siteeditor > .contents > .item > .nav > .down').click(function(){
-            cms.w.siteeditor.scrollTo=$(this).parent().parent();
+            cms.w.siteeditor.scrollTo=$(this).parent().parent().offset().top;
             $('html, body').animate({
                scrollTop: cms.w.siteeditor.scrollTo.offset().top
            }, 500)
         });
 
         $('.siteeditor > .contents > .item .itm .up, .siteeditor > .contents > .item .itm .down, .siteeditor > .contents > .item .itm .delete').click(function(){
-            //cms.w.siteeditor.scrollTo=$(this).parent().parent().parent().parent();
-            //console.log(cms.w.siteeditor.scrollTo);
             $('html, body').scrollTop(cms.w.siteeditor.scrollTo);
         });
 
