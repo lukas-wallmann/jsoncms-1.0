@@ -938,7 +938,7 @@ cms.w.menu= {
         });
 
         $(".listitem .remove").click(function() {
-          var r = confirm("Delete?");
+          var r = confirm("Delete: "+$(this).parent().children(".title").text()+"?");
           if (r == true) {
             $(this).parent().remove();
             cms.w.menueditor.saveAsView();
