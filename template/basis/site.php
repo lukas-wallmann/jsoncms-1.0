@@ -25,7 +25,8 @@
               $code.="<pre class='item code'><code class='language-php'>".str_replace($search,$replace,$element->content)."</code></pre>";
               break;
           case "image":
-              $code.="<figure class='item image'><img src='$baseurl/admin/".$element->content->image."' alt='".$element->content->description."'><figcaption>".$element->content->description."</figcaption></figure>";
+              $img=$baseurl."/admin/".$element->content->image;
+              $code.="<figure class='item image'><a title='".$element->content->description."' href='".$img."'><img src='".$img."' alt='".$element->content->description."'><figcaption>".$element->content->description."</figcaption></a></figure>";
               break;
           case "text_image":
               $img="/admin/".$element->content->image;
@@ -44,7 +45,7 @@
               $code.="<div class='item downloads'>";
               foreach ($element->content as $download) {
                 $url="/admin/".$download->filename;
-                $code.="<a href='".$url."'>".$download->name."</a>";
+                $code.="<a href='".$baseurl.$url."'>".$download->name."</a>";
               }
               $code.="</div>";
               break;
