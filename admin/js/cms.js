@@ -422,7 +422,7 @@ cms.w.siteeditor= {
       });
 
       $(".newelement .image").click(function(){
-        insertat(at,{type: "image",content: {image:"",description:"description text here"}});
+        insertat(at,{type: "image",content: {image:"",description:""}});
         cms.w.siteeditor.build(cms.w.siteeditor.data)
       });
 
@@ -501,7 +501,7 @@ cms.w.siteeditor= {
                   code.push("<textarea class='editor'>" + data[i].content.text + "</textarea><div class='imageuploader'></div><img src='"+data[i].content.image+"'></div>");
                   break;
                 case "image":
-                    code.push("<div class='item image' data-type='image'><div class='nav'><h2>image</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='imageuploader'></div><img src='"+data[i].content.image+"'><div class='description'><label>description</label><input type='text' value='"+data[i].content.description+"' class='desc'></div></div></div>")
+                    code.push("<div class='item image' data-type='image'><div class='nav'><h2>image</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='imageuploader'></div><img src='"+data[i].content.image+"'><div class='description'><label>description</label><input type='text' placeholder='description' value='"+data[i].content.description+"' class='desc'></div></div></div>")
                     break;
                 case "html":
                   code.push("<div class='item html' data-type='html'><div class='nav'><h2>html code</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><textarea class='htmlcode'>" + data[i].content + "</textarea></div>");
