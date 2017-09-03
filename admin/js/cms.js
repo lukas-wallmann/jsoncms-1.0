@@ -10,6 +10,19 @@ var cms={
 
   c:{
 
+    //Scrollback
+    scroll:function(){
+      if(cms.w.siteeditor.scrollTo=="last"){
+        $('html, body').animate({
+          scrollTop: $(".siteeditor > .contents > .item").last().offset().top
+        }, 500);
+      }else{
+          $('html, body').animate({
+            scrollTop: cms.w.siteeditor.scrollTo
+          }, 500);
+      }
+    },
+
     //Cachekiller
     ck: function(url) {
         var ck = new Date().getTime() + cms.c.gT(4);
@@ -530,21 +543,7 @@ cms.w.siteeditor= {
         $("#content .contents").append(code.join(""));
         cms.w.siteeditor.aktItmNav();
 
-        if(cms.w.siteeditor.scrollTo=="last"){
-
-          $('html, body').animate({
-            scrollTop: $(".siteeditor > .contents > .item").last().offset().top
-          }, 500);
-
-        }else{
-
-            $('html, body').animate({
-              scrollTop: cms.w.siteeditor.scrollTo
-            }, 500);
-
-
-        }
-
+        cms.c.scroll();
       var dd=1;
 
       function resetNav(){
@@ -608,6 +607,7 @@ cms.w.siteeditor= {
       $('.downloadsuploader').append(cms.c.btn("select files / add files","select_f"));
 
       $('.downloadsuploader .select_f').click(function(){
+        setScrollTop();
         $('.siteeditor').hide();
         var elm=$(this).parent().parent();
         cms.w.files.create("uploads/","multi",function(data){
@@ -619,10 +619,12 @@ cms.w.siteeditor= {
           $('.filemanager').remove();
           refreshElmFunctions();
           resetNav();
+          cms.c.scroll();
         });
       });
 
       $('.galleryuploader .select_f').click(function(){
+        setScrollTop();
         $('.siteeditor').hide();
         var elm=$(this).parent().parent();
         cms.w.files.create("uploads/","multi",function(data){
@@ -639,10 +641,12 @@ cms.w.siteeditor= {
           $('.filemanager').remove();
           refreshElmFunctions();
           resetNav();
+          cms.c.scroll();
         });
       });
 
       $('.imageuploader .select_f').click(function(){
+        setScrollTop();
         $('.siteeditor').hide();
         var elm=$(this).parent().parent();
         cms.w.files.create("uploads/","single",function(data){
@@ -651,6 +655,7 @@ cms.w.siteeditor= {
           $('.filemanager').remove();
           refreshElmFunctions();
           resetNav();
+          cms.c.scroll();
         });
       });
 
@@ -659,7 +664,6 @@ cms.w.siteeditor= {
 
         cms.w.siteeditor.scrollTo=$('body').scrollTop();
         if(cms.w.siteeditor.scrollTo==0)  cms.w.siteeditor.scrollTo=$('html').scrollTop();
-
       }
 
 
