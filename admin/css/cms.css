@@ -61,7 +61,8 @@ body {
     text-transform: uppercase;
 }
 #main nav a.active {
-    font-weight: bold;
+  background: #fff;
+  color: #000;
 }
 #main #content {
     padding: 10px;
