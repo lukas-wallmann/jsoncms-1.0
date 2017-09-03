@@ -592,13 +592,13 @@ cms.w.siteeditor= {
         $('.siteeditor > .contents > .item > .nav > .up, .siteeditor > .contents > .item > .nav > .down').click(function(){
             cms.w.siteeditor.scrollTo=$(this).parent().parent().offset().top;
             $('html, body').animate({
-               scrollTop: cms.w.siteeditor.scrollTo.offset().top
+               scrollTop: cms.w.siteeditor.scrollTo
            }, 500)
         });
-
+        /*
         $('.siteeditor > .contents > .item .itm .up, .siteeditor > .contents > .item .itm .down, .siteeditor > .contents > .item .itm .delete').click(function(){
             $('html, body').scrollTop(cms.w.siteeditor.scrollTo);
-        });
+        });*/
 
       }
 
