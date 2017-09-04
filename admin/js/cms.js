@@ -595,11 +595,7 @@ cms.w.siteeditor= {
                scrollTop: cms.w.siteeditor.scrollTo
            }, 500)
         });
-        /*
-        $('.siteeditor > .contents > .item .itm .up, .siteeditor > .contents > .item .itm .down, .siteeditor > .contents > .item .itm .delete').click(function(){
-            $('html, body').scrollTop(cms.w.siteeditor.scrollTo);
-        });*/
-
+        
       }
 
       $('.imageuploader').append(cms.c.btn("select image / add image","select_f"));
