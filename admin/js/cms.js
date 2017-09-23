@@ -484,7 +484,7 @@ cms.w.siteeditor= {
 
             switch (data[i].type) {
                 case "text":
-                  code.push("<div class='item text' data-type='text'><div class='nav'><h2>text</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><textarea class='editor'>" + data[i].content + "</textarea></div>")
+                  code.push("<div class='item text' data-type='text'><div class='nav'><h2>text</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='editorcontainer'><div class='toolbar'></div><div class='editor' contenteditable='true'>" + data[i].content + "</div></div></div>")
                   break;
                 case "headline":
                   code.push("<div class='item headline' data-type='headline'><div class='nav'><h2>headline</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div>")
@@ -595,7 +595,7 @@ cms.w.siteeditor= {
                scrollTop: cms.w.siteeditor.scrollTo
            }, 500)
         });
-        
+
       }
 
       $('.imageuploader').append(cms.c.btn("select image / add image","select_f"));
@@ -665,20 +665,7 @@ cms.w.siteeditor= {
 
       function fixFuckingEditor(){
 
-        $(".siteeditor > .contents > .item.text").each(function(){
-          $(this).css("min-height",$(this).height());
-        })
-        for(var instanceName in CKEDITOR.instances){
-            CKEDITOR.instances[instanceName].updateElement();
-        }
-        for(name in CKEDITOR.instances){
-            CKEDITOR.instances[name].destroy()
-        }
-        $(".editor").each(function(){
-          $(this).attr("id","editor"+dd);
-          CKEDITOR.replace( 'editor'+dd,{filebrowserBrowseUrl: '/admin/filebrowser.php',filebrowserUploadUrl: '/admin/filebrowser.php'});
-          dd=dd+1;
-        });
+        $(".editorcontainer").Editor();
 
       }
 
@@ -712,11 +699,7 @@ cms.w.siteeditor= {
 
       }
 
-      $(".editor").each(function(){
-        $(this).attr("id","editor"+dd);
-        CKEDITOR.replace( 'editor'+dd,{filebrowserBrowseUrl: '/admin/filebrowser.php',filebrowserUploadUrl: '/admin/filebrowser.php'});
-        dd+=1;
-      });
+      $(".editorcontainer").Editor();
 
     },
 
@@ -724,9 +707,7 @@ cms.w.siteeditor= {
 
         var o = {};
         //Dirty editor hack not working otherwise
-        for(var instanceName in CKEDITOR.instances){
-            CKEDITOR.instances[instanceName].updateElement();
-        }
+      
         o.title = $(".fixsiteparts .title").val();
         o.id = $(".fixsiteparts .id").val();
         o.file = getUniqueFilename($(".fixsiteparts .file").val(),cms.w.site.data.sites);
@@ -759,7 +740,7 @@ cms.w.siteeditor= {
                 case "text":
                     o.content.push({
                         type: "text",
-                        content: $(this).find("textarea").val()
+                        content: $(this).find(".editor").html()
                     })
                     break;
                 case "headline":
@@ -1288,6 +1269,7 @@ cms.w.files= {
 
 }
 
+//Settings
 cms.w.settings={
   create:function(){
 
