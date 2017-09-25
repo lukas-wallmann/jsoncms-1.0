@@ -706,8 +706,6 @@ cms.w.siteeditor= {
     saveData: function(toFile,tmp=false) {
 
         var o = {};
-        //Dirty editor hack not working otherwise
-      
         o.title = $(".fixsiteparts .title").val();
         o.id = $(".fixsiteparts .id").val();
         o.file = getUniqueFilename($(".fixsiteparts .file").val(),cms.w.site.data.sites);
