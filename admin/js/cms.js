@@ -675,7 +675,7 @@ cms.w.siteeditor= {
       }).change(function(){
         var elm=$(this).parent().parent();
         actVideo(elm);
-      }).change(function(){
+      }).on("input",function(){
         var elm=$(this).parent().parent();
         actVideo(elm);
       });
