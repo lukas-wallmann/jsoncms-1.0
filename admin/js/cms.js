@@ -511,7 +511,7 @@ cms.w.siteeditor= {
                     code.push("<option value='"+aligns[j]+"'"+selected+">"+aligns[j]+"</option>");
                   }
                   code.push("</select>");
-                  code.push("<textarea class='editor'>" + data[i].content.text + "</textarea><div class='imageuploader'></div><img src='"+data[i].content.image+"'></div>");
+                  code.push("<div class='editorcontainer'><div class='toolbar'></div><div class='editor' contenteditable='true'>" + data[i].content.text + "</div></div><div class='imageuploader'></div><img src='"+data[i].content.image+"'></div>");
                   break;
                 case "image":
                     code.push("<div class='item image' data-type='image'><div class='nav'><h2>image</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='imageuploader'></div><img src='"+data[i].content.image+"'><div class='description'><label>description</label><input type='text' placeholder='description' value='"+data[i].content.description+"' class='desc'></div></div></div>")
@@ -756,7 +756,7 @@ cms.w.siteeditor= {
                 case "text_image":
                     o.content.push({
                         type: "text_image",
-                        content: {text:$(this).find("textarea").val(),image:$(this).find("img").attr("src"),align:$(this).find('.imagealign').val()}
+                        content: {text:$(this).find(".editor").html(),image:$(this).find("img").attr("src"),align:$(this).find('.imagealign').val()}
                     })
                     break;
                 case "image":
