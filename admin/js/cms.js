@@ -569,7 +569,7 @@ cms.w.siteeditor= {
           setScrollTop();
           elm.insertBefore(elm.prev());
           resetNav();
-          fixFuckingEditor();
+          fixEditor();
         });
 
         $('.item > .nav .down, .itm > .nav .down').click(function(){
@@ -577,7 +577,7 @@ cms.w.siteeditor= {
           setScrollTop();
           elm.insertAfter(elm.next());
           resetNav();
-          fixFuckingEditor();
+          fixEditor();
         });
 
         $('.item > .nav .delete, .itm > .nav .delete').click(function(){
@@ -586,7 +586,7 @@ cms.w.siteeditor= {
           elm.remove();
           resetNav();
           cms.w.siteeditor.saveData(false);
-          fixFuckingEditor();
+          fixEditor();
         });
 
         $('.siteeditor > .contents > .item > .nav > .up, .siteeditor > .contents > .item > .nav > .down').click(function(){
@@ -663,7 +663,7 @@ cms.w.siteeditor= {
       }
 
 
-      function fixFuckingEditor(){
+      function fixEditor(){
 
         $(".editorcontainer").Editor();
 
