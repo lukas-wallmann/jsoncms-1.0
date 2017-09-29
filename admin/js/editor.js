@@ -4,6 +4,7 @@ $.fn.Editor = function() {
     $(this).find(".toolbar").html(editortemplate);
 
     $('.toolbar a').click(function(e) {
+      e.preventDefault();
       var command = $(this).data('command');
       if (command == 'h1' || command == 'h2' || command == 'p') {
         document.execCommand('formatBlock', false, command);
