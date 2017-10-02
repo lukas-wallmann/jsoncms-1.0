@@ -1,5 +1,5 @@
 <?php
 $basedir=dirname(__FILE__);
-$baseurlws="";
-$baseurl="".$baseurlws;
+$baseurlws="jsoncms-4.0";
+$baseurl="/".$baseurlws;
 ?>
