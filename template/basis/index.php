@@ -14,9 +14,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $baseurl?>/template/basis/css/site.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $baseurl?>/template/basis/css/prism.css">
 
-    <script src="<?php echo $baseurl?>/template/basis/js/prism.js"></script>
-    <script src="<?php echo $baseurl?>/template/basis/js/jquery.js"></script>
-    <script src="<?php echo $baseurl?>/template/basis/js/site.js"></script>
 
   </head>
 
@@ -34,6 +31,13 @@
         <?php echo getMenu("META_MENU","mainMenuHandle") ?>
       </nav>
     </footer>
+    <script src="<?php echo $baseurl?>/template/basis/js/prism.js"></script>
+    <script
+  			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  			  crossorigin="anonymous"></script>
+    <script src="<?php echo $baseurl?>/template/basis/js/site.js"></script>
+
   </body>
 
 </html>
