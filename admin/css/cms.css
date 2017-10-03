@@ -154,53 +154,17 @@ body {
     margin: 0 0 5px;
     padding: 5px 5px 5px 49px;
 }
-.listitem .up {
-    background: rgba(0, 0, 0, 0) url("../img/up.png") repeat scroll 0 0;
-    color: #fff;
+
+.listitem .down, .listitem .up, .listitem .remove {
+    font-size: 40px;
     cursor: pointer;
-    display: inline-block;
     float: right;
-    height: 32px;
-    margin: 0 10px 0 0;
-    overflow: hidden;
-    text-indent: 100%;
-    width: 32px;
-}
-.listitem .down {
-    background: rgba(0, 0, 0, 0) url("../img/down.png") repeat scroll 0 0;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    height: 32px;
-    margin: 0 10px 0 0;
-    overflow: hidden;
-    text-indent: 100%;
-    width: 32px;
-}
-.listitem .remove {
-    background: rgba(0, 0, 0, 0) url("../img/delete.png") repeat scroll 0 0;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    height: 32px;
-    margin: 0 10px 0 0;
-    overflow: hidden;
-    text-indent: 100%;
-    width: 32px;
+    margin: 0 -8px 0 0;
 }
 .listitem .addsub {
-    background: rgba(0, 0, 0, 0) url("../img/plus.png") repeat scroll 0 0;
-    color: #fff;
     cursor: pointer;
-    display: inline-block;
     float: right;
-    height: 32px;
-    margin: 0 10px 0 0;
-    overflow: hidden;
-    text-indent: -203%;
-    width: 32px;
+    font-size: 40px;
 }
 .item.html .htmlcode {
     box-sizing: border-box;
@@ -270,22 +234,16 @@ h2 {
     text-align: left;
 }
 .nav > a.down, .nav > a.up, .nav > a.delete {
-    background: rgba(0, 0, 0, 0) url("../img/down.png") repeat scroll 0 0;
     cursor: pointer;
-    display: inline-block;
-    height: 32px;
-    margin: 0 10px 0 0;
-    overflow: hidden;
-    padding: 0;
-    text-indent: 100%;
-    width: 32px;
+    font-size: 40px;
 }
 .nav > a.up {
-    background: rgba(0, 0, 0, 0) url("../img/up.png") repeat scroll 0 0;
+    cursor: pointer;
+    font-size: 40px;
 }
 .nav > a.delete {
-    background: rgba(0, 0, 0, 0) url("../img/delete.png") repeat scroll 0 0;
-    margin: 0;
+    cursor: pointer;
+    font-size: 40px;
 }
 .siteeditor .item.video .fields label {
     display: block;

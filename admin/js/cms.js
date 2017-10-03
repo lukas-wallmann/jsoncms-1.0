@@ -194,7 +194,7 @@ cms.w.site= {
         //List sites
         for (var i = 0; i < data.sites.length; i++) {
             var c = "";
-            code.push("<div class='listitem" + c + "' data-id='" + data.sites[i].id + "' data-file='" + data.sites[i].file + "' data-menuid='" + data.sites[i].menuid + "'><span class='title'>" + data.sites[i].title + "</span><a class='remove'>x</a><a class='up'>up</a><a class='down'>down</a><div class='clearline'></div></div>");
+            code.push("<div class='listitem" + c + "' data-id='" + data.sites[i].id + "' data-file='" + data.sites[i].file + "' data-menuid='" + data.sites[i].menuid + "'><span class='title'>" + data.sites[i].title + "</span><a class='remove fa fa-times fa-fw' aria-hidden='true'></a><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><div class='clearline'></div></div>");
         }
 
         $("#content").html(code.join(""));
@@ -484,10 +484,10 @@ cms.w.siteeditor= {
 
             switch (data[i].type) {
                 case "text":
-                  code.push("<div class='item text' data-type='text'><div class='nav'><h2>text</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='editorcontainer'><div class='toolbar'></div><div class='editor' contenteditable='true'>" + data[i].content + "</div></div></div>")
+                  code.push("<div class='item text' data-type='text'><div class='nav'><h2>text</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><div class='editorcontainer'><div class='toolbar'></div><div class='editor' contenteditable='true'>" + data[i].content + "</div></div></div>")
                   break;
                 case "headline":
-                  code.push("<div class='item headline' data-type='headline'><div class='nav'><h2>headline</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div>")
+                  code.push("<div class='item headline' data-type='headline'><div class='nav'><h2>headline</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div>")
                   code.push("<select class='type'>");
                   for (var j=1; j<7; j++){
                     var selected="";
@@ -497,10 +497,10 @@ cms.w.siteeditor= {
                   code.push("</select><input type='text' value='"+data[i].content.content+"'></div>")
                   break;
                 case "code":
-                    code.push("<div class='item code' data-type='code'><div class='nav'><h2>code</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><textarea class='editor-code'>" + data[i].content + "</textarea></div>")
+                    code.push("<div class='item code' data-type='code'><div class='nav'><h2>code</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><textarea class='editor-code'>" + data[i].content + "</textarea></div>")
                     break;
                 case "text_image":
-                  code.push("<div class='item text_image' data-type='text_image'><div class='nav'><h2>text &amp; image</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div>");
+                  code.push("<div class='item text_image' data-type='text_image'><div class='nav'><h2>text &amp; image</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div>");
                   code.push("<label>image align:</label><select class='imagealign'>");
                   var aligns=["right","left"];
                   for(var j=0; j<aligns.length; j++){
@@ -514,25 +514,25 @@ cms.w.siteeditor= {
                   code.push("<div class='editorcontainer'><div class='toolbar'></div><div class='editor' contenteditable='true'>" + data[i].content.text + "</div></div><div class='imageuploader'></div><img src='"+data[i].content.image+"'></div>");
                   break;
                 case "image":
-                    code.push("<div class='item image' data-type='image'><div class='nav'><h2>image</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='imageuploader'></div><img src='"+data[i].content.image+"'><div class='description'><label>description</label><input type='text' placeholder='description' value='"+data[i].content.description+"' class='desc'></div></div></div>")
+                    code.push("<div class='item image' data-type='image'><div class='nav'><h2>image</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><div class='imageuploader'></div><img src='"+data[i].content.image+"'><div class='description'><label>description</label><input type='text' placeholder='description' value='"+data[i].content.description+"' class='desc'></div></div></div>")
                     break;
                 case "html":
-                  code.push("<div class='item html' data-type='html'><div class='nav'><h2>html code</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><textarea class='htmlcode'>" + data[i].content + "</textarea></div>");
+                  code.push("<div class='item html' data-type='html'><div class='nav'><h2>html code</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><textarea class='htmlcode'>" + data[i].content + "</textarea></div>");
                   break;
                 case "video":
-                  code.push("<div class='item video' data-type='video'><div class='nav'><h2>video</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='preview'></div><div class='fields'><label>Youtube URL</label><input class='videourl' value='"+data[i].content.url+"'><input type='hidden' class='videoid' val='"+data[i].content.id+"'></div>" + "<div class='clear'></div></div>");
+                  code.push("<div class='item video' data-type='video'><div class='nav'><h2>video</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><div class='preview'></div><div class='fields'><label>Youtube URL</label><input class='videourl' value='"+data[i].content.url+"'><input type='hidden' class='videoid' val='"+data[i].content.id+"'></div>" + "<div class='clear'></div></div>");
                   break;
                 case "gallery":
-                    code.push("<div class='item gallery' data-type='gallery'><div class='nav'><h2>gallery</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='galleryuploader'></div><div class='gallerycontent'>");
+                    code.push("<div class='item gallery' data-type='gallery'><div class='nav'><h2>gallery</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><div class='galleryuploader'></div><div class='gallerycontent'>");
                     for(var j=0; j<data[i].content.length; j++){
-                      code.push("<div class='itm'><div class='nav'><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><img src='"+data[i].content[j].src+"' data-big='"+data[i].content[j].srcbig+"'><input class='description' value='"+data[i].content[j].description+"' placeholder='image description'></div>");
+                      code.push("<div class='itm'><div class='nav'><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><img src='"+data[i].content[j].src+"' data-big='"+data[i].content[j].srcbig+"'><input class='description' value='"+data[i].content[j].description+"' placeholder='image description'></div>");
                     }
                     code.push("</div></div>");
                     break;
                 case "downloads":
-                    code.push("<div class='item downloads' data-type='downloads'><div class='nav'><h2>downloads</h2><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='downloadsuploader'></div><div class='downloadcontent'>");
+                    code.push("<div class='item downloads' data-type='downloads'><div class='nav'><h2>downloads</h2><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><div class='downloadsuploader'></div><div class='downloadcontent'>");
                     for(var j=0; j<data[i].content.length; j++){
-                      code.push("<div class='itm'><div class='nav'><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='filename'>"+data[i].content[j].filename+"</div><input type='text' value='"+data[i].content[j].name+"'></div>");
+                      code.push("<div class='itm'><div class='nav'><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><div class='filename'>"+data[i].content[j].filename+"</div><input type='text' value='"+data[i].content[j].name+"'></div>");
                     }
                     code.push("</div></div>");
                     break;
@@ -609,7 +609,7 @@ cms.w.siteeditor= {
         cms.w.files.create("uploads/","multi",function(data){
           for(var i=0; i<data.length; i++){
 
-            elm.find(".downloadcontent").append("<div class='itm'><div class='nav'><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><div class='filename'>"+data[i]+"</div><input type='text' value='"+data[i].split("/")[data[i].split("/").length-1]+"'></div>");
+            elm.find(".downloadcontent").append("<div class='itm'><div class='nav'><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><div class='filename'>"+data[i]+"</div><input type='text' value='"+data[i].split("/")[data[i].split("/").length-1]+"'></div>");
           }
           $('.siteeditor').show();
           $('.filemanager').remove();
@@ -631,7 +631,7 @@ cms.w.siteeditor= {
               src+=parts[j]+"/";
             }
             src+="thumps/gallery_"+parts[parts.length-1];
-            elm.find(".gallerycontent").append("<div class='itm'><div class='nav'><a class='up'>up</a><a class='down'>down</a><a class='delete'>delete</a></div><img src='"+src+"' data-big='"+data[i]+"'><input class='description' value='' placeholder='image description'></div>");
+            elm.find(".gallerycontent").append("<div class='itm'><div class='nav'><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><a class='delete fa fa-times fa-fw' aria-hidden='true'></a></div><img src='"+src+"' data-big='"+data[i]+"'><input class='description' value='' placeholder='image description'></div>");
           }
           $('.siteeditor').show();
           $('.filemanager').remove();
@@ -890,7 +890,7 @@ cms.w.menu= {
         function createMenu(data, depth) {
 
             for (var i = 0; i < data.length; i++) {
-                code.push("<div class='listitem' data-id='" + data[i].id + "' data-target='" + data[i].target + "' data-action='" + data[i].action + "'><span class='title'>" + data[i].title + "</span><a class='remove'>x</a><a class='addsub'>add sub</a><a class='up'>up</a><a class='down'>down</a><div class='clearline'></div><div class='sub'>");
+                code.push("<div class='listitem' data-id='" + data[i].id + "' data-target='" + data[i].target + "' data-action='" + data[i].action + "'><span class='title'>" + data[i].title + "</span><a class='remove fa fa-times fa-fw' aria-hidden='true'></a><a class='addsub fa fa-plus-circle fa-fw' aria-hidden='true'></a><a class='up fa fa-arrow-circle-up fa-fw' aria-hidden='true'></a><a class='down fa fa-arrow-circle-down fa-fw' aria-hidden='true'></a><div class='clearline'></div><div class='sub'>");
                 if (data[i].sub.length > 0) {
                     createMenu(data[i].sub, depth + 1);
                 }
@@ -1047,9 +1047,9 @@ cms.w.menueditor= {
                 elm.children(".title").text($(".menueditor .title").val());
             } else {
                 if (parent != 0) {
-                    $(".menucontainer .listitem[data-id='" + parent + "']").children(".sub").append("<div class='listitem' data-id='" + $(".menueditor .id").val() + "' data-target='" + $(".menueditor .target").val() + "' data-action='" + $(".menueditor .action").val() + "'><span class='title'>" + $(".menueditor .title").val() + "</span><a class='remove'>x</a><a class='addsub'>add sub</a><div class='clearline'></div><div class='sub'></div></div>");
+                    $(".menucontainer .listitem[data-id='" + parent + "']").children(".sub").append("<div class='listitem' data-id='" + $(".menueditor .id").val() + "' data-target='" + $(".menueditor .target").val() + "' data-action='" + $(".menueditor .action").val() + "'><span class='title'>" + $(".menueditor .title").val() + "</span><a class='remove fa fa-times fa-fw' aria-hidden='true'></a><a class='addsub fa fa-plus-circle fa-fw' aria-hidden='true'></a><div class='clearline'></div><div class='sub'></div></div>");
                 } else {
-                    $(".menucontainer").append("<div class='listitem' data-id='" + $(".menueditor .id").val() + "' data-target='" + $(".menueditor .target").val() + "' data-action='" + $(".menueditor .action").val() + "'><span class='title'>" + $(".menueditor .title").val() + "</span><a class='remove'>x</a><a class='addsub'>add sub</a><div class='clearline'></div><div class='sub'></div></div>");
+                    $(".menucontainer").append("<div class='listitem' data-id='" + $(".menueditor .id").val() + "' data-target='" + $(".menueditor .target").val() + "' data-action='" + $(".menueditor .action").val() + "'><span class='title'>" + $(".menueditor .title").val() + "</span><a class='remove fa fa-times fa-fw' aria-hidden='true'></a><a class='addsub fa fa-plus-circle fa-fw' aria-hidden='true'></a><div class='clearline'></div><div class='sub'></div></div>");
                 }
             }
             cms.w.menueditor.saveAsView();
